@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout  xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" 
+    android:gravity="center"
+    >
+    
+    <TableLayout
+        android:id="@+id/grid_wel_page"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        >
+        <TableRow>
+
+            <ImageButton
+                android:id="@+id/button_parta"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/btn_new_energy" />
+
+            <ImageButton
+                android:id="@+id/button_partb"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/btn_around_me"
+                />
+          </TableRow>
+         <TableRow android:layout_gravity="center">
+
+             <ImageButton
+                 android:id="@+id/button_partc"
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:background="@drawable/btn_search" />
+
+            <ImageButton
+                android:id="@+id/button_partd"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/btn_post"
+                />
+           </TableRow>
+    </TableLayout>
+
+    <ImageButton
+        android:id="@+id/button_help"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/btn_help"
+        android:gravity="bottom" />
+
+</LinearLayout >
+
+
