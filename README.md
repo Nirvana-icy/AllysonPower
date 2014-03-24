@@ -1,9 +1,9 @@
-#Proposal for Project “A smart phone application to support citizen journalism”
+##Proposal for Project “A smart phone application to support citizen journalism”
 ---
-##Name:Liu Tiantian
+Name:Liu Tiantian  
+Date of Submission:28-1-2014  
+Team number:Liu Tiantian
 
-##Date of Submission:28-1-2014
-##Team number:Liu Tiantian
 ---
 ##Project Name:A smart phone application to support citizen journalism  
 ##Background 
@@ -15,7 +15,8 @@ In this project I want to develop a application that guide user upload public ev
 “We are all witness”.Maybe there are more than one user of this application had been encouraged by the event.So there will be many people share this event.Of course some of them don’t want to connect with journalism.They just share this news.Don’t worry.This application have a function that can statistic and manager the keywords of the events.Journalism can find events that they interested in by themselves use the keywords.
 Overall, this application not only provides the opportunities for users to share even sale their news to journalism , also provides some clues to media agencies .
 ##Implementation and basic architecture
-![image](https://raw.githubusercontent.com/Nirvana-icy/AllysonPower/master/proposal/doc_1395577217513671224.files_image0.jpg)
+![image](https://raw.githubusercontent.com/Nirvana-icy/AllysonPower/master/proposal/doc_1395577217513671224.files_image0.jpg)  
+  
 (Application sketch)
        
 1.This application will be developed in java language.  
@@ -28,7 +29,9 @@ The third one:(c)"Energy statistics".If possible,I want find the keywords of the
 Last one:(d)"User have something to post".this part user can post the things that they met and can select sent to journalism or not by themselves.
 
 ##Time Plan
-![image](https://raw.githubusercontent.com/Nirvana-icy/AllysonPower/master/proposal/屏幕快照%202014-03-23%20下午11.22.09.png)
+  
+![image](https://raw.githubusercontent.com/Nirvana-icy/AllysonPower/master/proposal/屏幕快照%202014-03-23%20下午11.22.09.png)  
+
 Ps:”6th Week” means the sixth week of 2014
 ##Conclusion
 Thank you for giving me this opportunity to try to do this application.After some discussing ，researching and writing this proposal,I have more understanding about what I should do and when I should do for this application.

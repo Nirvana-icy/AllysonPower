@@ -6,4 +6,6 @@
     <string name="hello_world">Hello world!</string>
     <string name="desc">Picture_desc</string>
     <string name="loading">Loading</string>
+    <string name="say_something">Say something~</string>
+    <string name="locating">locating</string>
 </resources>
