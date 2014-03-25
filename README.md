@@ -1,3 +1,25 @@
+---  
+```14.3.24``` 
+
+3rd-source & lib:  
+ActionBarSherlock-master  
+androidquery
+
+```Add post_new_msg.xml```
+  
+---
+```14.3.25```  
+  
+Target:Post news to parse via Activity post_new_msg.
+  
+Parse中数据存储格式：  
+  
+Event_ID |Event  |Positive|Location| Picture*|UserName|Time
+---------|-------|--------|--------|---------|--------|----
+Event_ID |String |  BOOL  |ParseGeo| Image   |String  |Date 
+  
+
+---
 ##Proposal for Project “A smart phone application to support citizen journalism”
 ---
 Name:Liu Tiantian  

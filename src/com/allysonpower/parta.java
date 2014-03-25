@@ -1,41 +1,6 @@
-//package com.allysonpower;
-//
-//import com.parse.Parse;
-//import com.parse.ParseObject;
-//
-//import android.app.Activity;
-//import android.os.Bundle;
-//
-//public class parta extends Activity{
-//	protected void onCreate(Bundle savedInstanceState){
-//		super.onCreate(savedInstanceState);
-//		Parse.initialize(this, "bDExeWi2vct7yqm52r5WPnEiuNyorLu9B2tSFREW", "MvzGGKqOt5Q56inQCPNpbYLAaiJmtykCjgh93C1K");
-//		ParseObject testObject = new ParseObject("TestObject");
-//		testObject.put("foo", "bar");
-//		testObject.saveInBackground();
-//	}
-//}
-
-/*
- * Copyright (C) 2012 lytsing.org
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package com.allysonpower;
 
 import android.content.DialogInterface;
-import android.util.*;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Color;
@@ -64,28 +29,13 @@ import android.widget.PopupMenu;
 import android.widget.TextView;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
-import com.actionbarsherlock.view.MenuItem;
-import com.allysonpower.util.AlertUtil;
 import com.allysonpower.util.Log;
 import com.androidquery.AQuery;
 import com.androidquery.callback.AjaxStatus;
-import com.androidquery.callback.AjaxCallback;
 import com.androidquery.callback.LocationAjaxCallback;
 
-import com.allysonpower.util.*;
 import com.allysonpower.GridViewFaceAdapter;
-
-//import com.weibo.sdk.android.WeiboException;
-//import com.weibo.sdk.android.api.StatusesAPI;
-//import com.weibo.sdk.android.net.RequestListener;
-
-//import org.lytsing.android.weibo.GridViewFaceAdapter;
-//import org.lytsing.android.weibo.R;
-//import org.lytsing.android.weibo.util.AlertUtil;
-//import org.lytsing.android.weibo.util.Log;
-
 import java.io.File;
-import java.io.IOException;
 
 public class parta extends BaseActivity implements OnClickListener
          {
