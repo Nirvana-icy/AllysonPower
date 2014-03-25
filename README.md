@@ -14,9 +14,9 @@ Target:Post news to parse via Activity post_new_msg.
   
 Parse中数据存储格式：  
   
-Event_ID |Event  |Positive|Location| Picture*|UserName|Time
----------|-------|--------|--------|---------|--------|----
-Event_ID |String |  BOOL  |ParseGeo| Image   |String  |Date 
+objectId |Event  |Positive|Location| Picture_Array*|UserName*|createdAt|updatedAt
+---------|-------|--------|--------|---------------|---------|---------|--------
+String   |String |  BOOL  |GeoPoint| Image Array   |String   |Date     |Date
   
 
 ---

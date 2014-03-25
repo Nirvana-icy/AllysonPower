@@ -8,4 +8,6 @@
     <string name="loading">Loading</string>
     <string name="say_something">Say something~</string>
     <string name="locating">locating</string>
+    <string name="sending">sending</string>
+    <string name="plz_input_sth">Please input something.</string>
 </resources>
