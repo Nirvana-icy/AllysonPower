@@ -1,4 +1,4 @@
-package com.allysonpower;
+package com.allysonpower.ui;
 
 import android.app.Activity;
 

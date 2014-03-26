@@ -1,4 +1,6 @@
-package com.allysonpower;
+package com.allysonpower.ui;
+
+import com.allysonpower.ui.R;
 
 import android.app.Activity;
 import android.app.AlertDialog;

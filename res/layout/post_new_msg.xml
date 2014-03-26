@@ -82,7 +82,7 @@
                         android:layout_weight="1.0"
                         android:background="@drawable/bg_btn"
                         android:src="@drawable/btn_insert_location" />
-
+                         
                     <ImageButton
                         android:id="@+id/ib_insert_pic"
                         android:layout_width="fill_parent"
@@ -90,14 +90,6 @@
                         android:layout_weight="1.0"
                         android:background="@drawable/bg_btn"
                         android:src="@drawable/btn_insert_pic" />
-
-                     <ImageButton
-                        android:id="@+id/ib_insert_topic"
-                        android:layout_width="fill_parent"
-                        android:layout_height="fill_parent"
-                        android:layout_weight="1.0"
-                        android:background="@drawable/bg_btn"
-                        android:src="@drawable/btn_insert_topic" />
 
                     <ImageButton
                         android:id="@+id/ib_send_msg"

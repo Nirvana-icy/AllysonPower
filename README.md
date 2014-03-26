@@ -1,14 +1,12 @@
----  
-```14.3.24``` 
+###14.3.24 
 
-3rd-source & lib:  
-ActionBarSherlock-master  
-androidquery
-
-```Add post_new_msg.xml```
+~~~3rd-source & lib:~~~  
+~~~ActionBarSherlock-master~~~  
+~~~androidquery~~~   
+~~~Add post_new_msg.xml~~~  
   
----
-```14.3.25```  
+###14.3.25
+~~~PartD UI Logic~~~
   
 Target:Post news to parse via Activity post_new_msg.
   
@@ -18,6 +16,9 @@ objectId |Event  |Positive|Location| Picture_Array*|UserName*|createdAt|updatedA
 ---------|-------|--------|--------|---------------|---------|---------|--------
 String   |String |  BOOL  |GeoPoint| Image Array   |String   |Date     |Date
   
+###14.3.26
+
+从post_new_msg 控件中抓取用户输入数据 上传parse.
 
 ---
 ##Proposal for Project “A smart phone application to support citizen journalism”

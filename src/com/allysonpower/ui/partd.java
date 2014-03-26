@@ -1,4 +1,4 @@
-package com.allysonpower;
+package com.allysonpower.ui;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -30,6 +30,7 @@ import android.widget.PopupMenu;
 import android.widget.TextView;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
+import com.allysonpower.ui.R;
 import com.allysonpower.util.Log;
 import com.androidquery.AQuery;
 import com.androidquery.callback.AjaxStatus;
@@ -38,8 +39,9 @@ import com.allysonpower.util.*;
 
 import java.io.File;
 
+import com.allysonpower.parse.AllysonPost;
 import com.parse.Parse;
-import com.parse.ParseAnalytics;
+import com.parse.ParseException;
 import com.parse.ParseObject;
 
 public class partd extends BaseActivity implements OnClickListener
@@ -48,8 +50,11 @@ public class partd extends BaseActivity implements OnClickListener
     private InputMethodManager imm;
     private String mPicPath = "";
     private String mContent = "";
-    private String mLatitude = "";
-    private String mLongitude = "";
+    
+    private static final double DEFAULT_LATITUDE = 22.282663;
+    private static final double DEFAULT_LONGTITUDE = 114.138752;
+    private double mLatitude = DEFAULT_LATITUDE;
+    private double mLongitude = DEFAULT_LONGTITUDE;
 
     private AQuery aq;
     private boolean mIsLocation = false;
@@ -63,7 +68,8 @@ public class partd extends BaseActivity implements OnClickListener
         StrictMode.setThreadPolicy(policy); 
 
         imm = (InputMethodManager)getSystemService(INPUT_METHOD_SERVICE);
-
+        //Regist the subclass of ParseObject first and then call Parse.initialize
+        ParseObject.registerSubclass(AllysonPost.class);
         Parse.initialize(this, "bDExeWi2vct7yqm52r5WPnEiuNyorLu9B2tSFREW", "MvzGGKqOt5Q56inQCPNpbYLAaiJmtykCjgh93C1K");
         
         initView();
@@ -94,53 +100,6 @@ public class partd extends BaseActivity implements OnClickListener
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //	   partd btn点击 消息响应函数聚集地..       
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    private void sendMsgBtnIsClicked() {
-        mContent = mEdit.getText().toString();
-        //User attached one photo to post
-        if (!TextUtils.isEmpty(mPicPath)) {
-            Util.showToast(this, R.string.sending);
-//          parseObject.upload(this.mContent, this.mPicPath, mLatitude, mLongitude, this);
-        } else {
-        	//User do not attache one photo and not input sth..
-        	if (TextUtils.isEmpty(mContent)) {
-            	displayToast(R.string.plz_input_sth);
-        	}
-        	// Just upload a text news to parse
-        	else {
-        		ParseObject parseObject = new ParseObject("News");
-        	
-        		parseObject.put("Event", "mEdit.getText()");
-        		parseObject.put("Positive", positive);
-    //        	parseObject.put("Location", (mLatitude, mLongitude));
-        	
-        		parseObject.saveInBackground();
-        	
-        		displayToast("Post one text news to Parse.");
-        	}
-        }
-    }
-    
-    private void insertPicBtnIsClicked()
-    {
-//      PopupMenu popup = new PopupMenu(this, view);
-//      popup.getMenuInflater().inflate(R.menu.pic, popup.getMenu());
-//
-//      popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-//          public boolean onMenuItemClick(android.view.MenuItem item) {
-//
-//              Intent galleryIntent = new Intent();
-//              galleryIntent.setType("image/*");
-//              galleryIntent.setAction(Intent.ACTION_GET_CONTENT);
-//              galleryIntent.putExtra(Intent.EXTRA_LOCAL_ONLY, true);
-//              startActivityForResult(galleryIntent, 2);
-//
-//              return true;
-//          }
-//      });
-//
-//      popup.show();
-    }
-
     private void positiveBtnIsClicked()
     {
     	if(!positive)     //默认positive是true(大拇指向上的图标高亮). 当positive是false的时候->大拇指向上的图标是灰色的.此时用户点击这个btn 高亮它.
@@ -177,8 +136,8 @@ public class partd extends BaseActivity implements OnClickListener
         if (mIsLocation) {
             aq.id(R.id.ib_insert_location).image(R.drawable.btn_insert_location_nor);
             mIsLocation = false;
-            mLatitude = "";
-            mLongitude = "";
+            mLatitude = DEFAULT_LATITUDE;
+            mLongitude = DEFAULT_LONGTITUDE;
         } else {
         	//如果GPS不是正在获取位置的状态 用户点击此btn  ＝> 1.start GPS location 2.将btn变为正在获取位置的btn  3.设置GPS标志状态为true
         	if(!mLocationGetting) {
@@ -193,16 +152,65 @@ public class partd extends BaseActivity implements OnClickListener
         }
     }
     
-    //Bug is here  点击插入话题btn  上层switch语句没有进入相应case  从而此函数没有被调用..
-    private void insertTopicBtnIsClicked()
+    private void insertPicBtnIsClicked()
     {
-    	//插入 ＃＃
-    	mEdit.setText("##", TextView.BufferType.EDITABLE);
-    	//调整光标位置到＃＃中间 方便用户输入
-    	Editable etext = mEdit.getText();
-    	int position = etext.length();
-    	mEdit.setSelection(position - 1);
+//      PopupMenu popup = new PopupMenu(this, view);
+//      popup.getMenuInflater().inflate(R.menu.pic, popup.getMenu());
+//
+//      popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+//          public boolean onMenuItemClick(android.view.MenuItem item) {
+//
+//              Intent galleryIntent = new Intent();
+//              galleryIntent.setType("image/*");
+//              galleryIntent.setAction(Intent.ACTION_GET_CONTENT);
+//              galleryIntent.putExtra(Intent.EXTRA_LOCAL_ONLY, true);
+//              startActivityForResult(galleryIntent, 2);
+//
+//              return true;
+//          }
+//      });
+//
+//      popup.show();
     }
+
+//    private void insertTopic()
+//    {
+//    	//插入 ＃＃
+//    	mEdit.append("##");
+//    	//调整光标位置到＃＃中间 方便用户输入
+//    	Editable etext = mEdit.getText();
+//    	int position = etext.length();
+//    	mEdit.setSelection(position - 1);
+//    }
+    
+    private void sendMsgBtnIsClicked() {
+        mContent = mEdit.getText().toString();
+        //User attached one photo to post
+        if (!TextUtils.isEmpty(mPicPath)) {
+            Util.showToast(this, R.string.sending);  //后面需要转换为spinner
+//          parseObject.upload(this.mContent, this.mPicPath, mLatitude, mLongitude, this);
+        } else {
+        	//User do not attache one photo but input text to post
+        	if (!TextUtils.isEmpty(mContent)) {
+                // Create a post.
+                AllysonPost post = new AllysonPost();
+                //set user input values to parse
+                post.setEventText(mEdit.getText().toString());
+                post.setPositive(positive);
+                post.setLocation(mLatitude, mLongitude);
+                // Save the post
+                post.saveInBackground();
+                //This Toast should be shown after post success
+        		displayToast("Post one text news to Parse.");
+        		mEdit.setText("");
+        	}
+        	//User do not attache one photo and not input sth..
+        	else {
+        		displayToast(R.string.plz_input_sth);
+        	}
+        }
+    }
+    
  //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
  //	   The message dispatch center of btn clicked    
  //	   为了代码整洁 每个btn 点击响应的函数在上面单独实现   
@@ -226,9 +234,6 @@ public class partd extends BaseActivity implements OnClickListener
             break;
         case R.id.ib_insert_pic:
         	insertPicBtnIsClicked();
-        	break;
-        case R.id.ib_insert_topic:  //Bug is here  点击插入话题btn  不会进入这个case..
-        	insertTopicBtnIsClicked();
         	break;
         case R.id.ib_send_msg:
         	sendMsgBtnIsClicked();

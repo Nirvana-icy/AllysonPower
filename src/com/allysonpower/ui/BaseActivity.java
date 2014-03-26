@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.allysonpower;
+package com.allysonpower.ui;
 
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
