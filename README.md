@@ -1,5 +1,4 @@
 ###14.3.24 
-
 ~~~3rd-source & lib:~~~  
 ~~~ActionBarSherlock-master~~~  
 ~~~androidquery~~~   
