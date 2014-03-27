@@ -1,94 +1,165 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-  xmlns:android="http://schemas.android.com/apk/res/android"
-  android:id="@+id/parta_home_layout"
-  android:orientation="vertical"
-  android:layout_width="fill_parent"
-  android:layout_height="fill_parent">
-  <RelativeLayout
-  android:layout_width="fill_parent"
-  android:layout_height="wrap_content"
-  android:layout_margin="3dp">
-  <ImageView
-  android:layout_width="wrap_content"
-  android:layout_height="wrap_content"
-  android:src="@drawable/logo"
-  android:contentDescription="@string/desc">
-  </ImageView>
-  <TextView
-  android:id="@+id/parta_home_title"
-  android:layout_width="wrap_content"
-  android:layout_height="wrap_content"
-  android:layout_centerInParent="true"
-  android:textColor="#343434"
-  android:textSize="15sp">
-  </TextView>
-  <ImageButton
-  android:id="@+id/refreshBtn"
-  android:layout_width="wrap_content"
-  android:layout_height="wrap_content"
-  android:layout_alignParentRight="true"
-  android:layout_marginLeft="12sp"
-  android:contentDescription="@string/desc"
-  android:background="@drawable/btn_refresh">
-  </ImageButton>
-  </RelativeLayout>
-  
-  <LinearLayout
-  android:layout_width="fill_parent"
-  android:layout_height="wrap_content"
-  android:background="@drawable/logo">
-  </LinearLayout>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:id="@+id/layout" android:orientation="vertical"
+	android:layout_width="fill_parent" android:layout_height="fill_parent">
 
-  <RelativeLayout
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent">
-        
-        <ListView
-            android:id="@+id/Msglist"
-            android:layout_width="fill_parent"
-            android:layout_height="match_parent"
-            android:divider="@drawable/logo"  
-            android:dividerHeight="2dp"
-            android:layout_margin="0px"
-            android:background="#BBFFFFFF"
-            android:cacheColorHint="#00000000"
-            android:layout_above="@+id/toolbarLayout"
-            android:fastScrollEnabled="true"  
-            android:focusable="true">
-        </ListView>
-        
-        <LinearLayout
-        android:id="@+id/loadingLayout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:visibility="invisible"
-        android:layout_centerInParent="true">
-            <ProgressBar
-            android:id="@+id/progressBar"
-            android:layout_width="31dp"
-            android:layout_height="31dp"
-            android:layout_gravity="center"
-            style="@style/progressStyle">
-            </ProgressBar>
-            <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/loading"
-            android:textSize="12sp"
-            android:textColor="#9c9c9c"
-            android:layout_gravity="center"
-            android:layout_below="@+id/progressBar">
-            </TextView>
-        </LinearLayout>
-        
-        <LinearLayout
-        android:id="@+id/toolbarLayout"
-        android:layout_width="fill_parent"
-        android:layout_height="44dip"
-        android:layout_alignParentBottom="true"
-        android:orientation = "horizontal">
-        </LinearLayout>
-  </RelativeLayout>
+	<RelativeLayout android:layout_width="fill_parent"
+		android:layout_height="wrap_content" android:layout_margin="5px">
+
+		<ImageView android:padding="5dp" android:layout_width="wrap_content"
+			android:id="@+id/rlogo" android:layout_centerVertical="true"
+			android:layout_height="wrap_content" android:src="@drawable/icon_logoo">
+		</ImageView>
+		<TextView android:id="@+id/showName" android:layout_width="wrap_content"
+			android:layout_toRightOf="@+id/rlogo" android:layout_centerVertical="true"
+			android:layout_height="wrap_content" android:layout_centerInParent="true"
+			android:textColor="#343434" android:textSize="15px">
+		</TextView>
+
+		<ImageButton android:id="@+id/refreshBtn"
+			android:layout_alignParentRight="true" android:layout_centerVertical="true"
+			android:layout_width="wrap_content" android:layout_height="wrap_content"
+			android:layout_marginLeft="5dp" android:background="@drawable/refreshbtn">
+		</ImageButton>
+	</RelativeLayout>
+
+	<LinearLayout android:layout_width="fill_parent"
+		android:layout_height="wrap_content">
+	</LinearLayout>
+
+	<RelativeLayout android:layout_width="fill_parent"
+		android:layout_height="fill_parent">
+
+		<ListView android:id="@+id/Msglist" android:layout_width="fill_parent"
+			android:layout_height="fill_parent" android:divider="?android:attr/listDivider"
+			android:dividerHeight="2px" android:layout_margin="0px"
+			android:background="#BBFFFFFF" android:cacheColorHint="#00000000"
+			android:layout_above="@+id/toolbarLayout" android:fastScrollEnabled="true"
+			android:focusable="true">
+		</ListView>
+
+		<LinearLayout android:id="@+id/loadingdingLayout"
+			android:background="#2C6A43" android:layout_width="wrap_content"
+			android:layout_height="wrap_content" android:orientation="vertical"
+			android:layout_centerInParent="true">
+			<ProgressBar android:id="@+id/loadingding"
+				android:layout_width="31px" android:layout_height="31px"
+				style="?android:attr/progressBarStyleLarge" android:layout_gravity="center">
+			</ProgressBar>
+		</LinearLayout>
+
+		<LinearLayout android:id="@+id/loadingLayout"
+			android:layout_width="wrap_content" android:layout_height="wrap_content"
+			android:orientation="vertical" android:visibility="invisible"
+			android:layout_centerInParent="true">
+			<ProgressBar android:id="@+id/loading"
+				android:layout_width="31px" android:layout_height="31px"
+				android:layout_gravity="center" style="@style/progressStyle">
+			</ProgressBar>
+			<TextView android:layout_width="wrap_content"
+				android:layout_height="wrap_content" android:text="正在载入"
+				android:textSize="12px" android:textColor="#9c9c9c"
+				android:layout_gravity="center" android:layout_below="@+id/loading">
+			</TextView>
+		</LinearLayout>
+
+
+		<LinearLayout android:id="@+id/toolbarLayout"
+			android:layout_width="fill_parent" android:layout_height="wrap_content"
+			android:gravity="center" android:orientation="horizontal"
+			android:padding="2dp" android:layout_alignParentBottom="true">
+			<LinearLayout android:id="@+id/btnHomeLayout"
+				android:layout_centerVertical="true" android:layout_weight="1"
+				android:layout_width="fill_parent" android:layout_height="wrap_content"
+				android:orientation="vertical" android:layout_alignParentLeft="true"
+				android:gravity="center">
+				<ImageView android:layout_height="wrap_content"
+
+					android:background="#00000000" android:src="@drawable/t1"
+					android:id="@+id/user_exit" android:layout_width="wrap_content"></ImageView>
+
+
+				<TextView android:layout_width="wrap_content"
+					android:textStyle="bold" android:layout_height="wrap_content"
+					android:textColor="#ffffff" android:textSize="13dp" android:text="首页">
+				</TextView>
+
+			</LinearLayout>
+
+
+			<LinearLayout android:id="@+id/btnSentLayout"
+				android:layout_centerVertical="true" android:layout_width="wrap_content"
+				android:layout_height="wrap_content" android:orientation="vertical"
+				android:layout_alignParentLeft="true" android:gravity="center">
+				<ImageView android:layout_height="wrap_content"
+
+					android:background="#00000000" android:src="@drawable/t2"
+					android:id="@+id/user_exit" android:layout_width="wrap_content"></ImageView>
+
+
+				<TextView android:layout_width="wrap_content"
+					android:layout_height="wrap_content" android:textColor="#ffffff"
+					android:textStyle="bold" android:textSize="13dp" android:text="发布">
+				</TextView>
+
+			</LinearLayout>
+
+			<LinearLayout android:id="@+id/btnHomeLayout"
+				android:layout_centerVertical="true" android:layout_weight="1"
+				android:layout_width="fill_parent" android:layout_height="wrap_content"
+				android:orientation="vertical" android:layout_alignParentLeft="true"
+				android:gravity="center">
+				<ImageView android:layout_height="wrap_content"
+
+					android:background="#00000000" android:src="@drawable/t3"
+					android:id="@+id/user_exit" android:layout_width="wrap_content"></ImageView>
+
+
+				<TextView android:layout_width="wrap_content"
+					android:layout_height="wrap_content" android:textColor="#ffffff"
+					android:textStyle="bold" android:textSize="13dp" android:text="资料">
+				</TextView>
+
+			</LinearLayout>
+
+
+			<LinearLayout android:id="@+id/btnHomeLayout"
+				android:layout_centerVertical="true" android:layout_weight="1"
+				android:layout_width="fill_parent" android:layout_height="wrap_content"
+				android:orientation="vertical" android:layout_alignParentLeft="true"
+				android:gravity="center">
+				<ImageView android:layout_height="wrap_content"
+
+					android:background="#00000000" android:src="@drawable/t4"
+					android:id="@+id/user_exit" android:layout_width="wrap_content"></ImageView>
+
+
+				<TextView android:layout_width="wrap_content"
+					android:layout_height="wrap_content" android:textColor="#ffffff"
+					android:textStyle="bold" android:textSize="13dp" android:text="搜索">
+				</TextView>
+
+			</LinearLayout>
+
+			<LinearLayout android:id="@+id/btnHomeLayout"
+				android:layout_centerVertical="true" android:layout_weight="1"
+				android:layout_width="fill_parent" android:layout_height="wrap_content"
+				android:orientation="vertical" android:layout_alignParentLeft="true"
+				android:gravity="center">
+				<ImageView android:layout_height="wrap_content"
+
+					android:background="#00000000" android:src="@drawable/t5"
+					android:id="@+id/user_exit" android:layout_width="wrap_content"></ImageView>
+
+
+				<TextView android:layout_width="wrap_content"
+					android:layout_height="wrap_content" android:textColor="#ffffff"
+					android:textStyle="bold" android:textSize="13dp" android:text="更多">
+				</TextView>
+
+			</LinearLayout>
+
+		</LinearLayout>
+
+	</RelativeLayout>
 </LinearLayout>
