@@ -7,7 +7,7 @@ import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
 @ParseClassName("News")
-public class AllysonPost extends ParseObject {
+public class AllysonNewsInfo extends ParseObject {
 	//convenient getter/setter method to get/setter the data which is store in parse-News table
 	
 	public String getEventText() {
@@ -35,8 +35,8 @@ public class AllysonPost extends ParseObject {
 		put("Location", location);
 	}
 	
-	//convenient getQuery method
-	public static ParseQuery<AllysonPost> getQuery() {
-		return ParseQuery.getQuery(AllysonPost.class);
-	}
+//	//convenient getQuery method
+//	public static ParseQuery<AllysonNewsInfo> getQuery() {
+//		return ParseQuery.getQuery(AllysonNewsInfo.class);
+//	}
 }

@@ -46,7 +46,7 @@ import com.allysonpower.util.*;
 
 import java.io.File;
 
-import com.allysonpower.parse.AllysonPost;
+import com.allysonpower.parse.AllysonNewsInfo;
 import com.parse.Parse;
 import com.parse.ParseException;
 import com.parse.ParseObject;
@@ -78,7 +78,7 @@ public class partd extends BaseActivity implements OnClickListener
 
         imm = (InputMethodManager)getSystemService(INPUT_METHOD_SERVICE);
         //Regist the subclass of ParseObject first and then call Parse.initialize
-        ParseObject.registerSubclass(AllysonPost.class);
+        ParseObject.registerSubclass(AllysonNewsInfo.class);
         Parse.initialize(this, "bDExeWi2vct7yqm52r5WPnEiuNyorLu9B2tSFREW", "MvzGGKqOt5Q56inQCPNpbYLAaiJmtykCjgh93C1K");
         //Get LocationManager
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
@@ -278,7 +278,7 @@ private final LocationListener locationListener = new LocationListener() {
         	//User do not attache one photo but input text to post
         	if (!TextUtils.isEmpty(mContent)) {
                 // Create a post.
-                AllysonPost post = new AllysonPost();
+                AllysonNewsInfo post = new AllysonNewsInfo();
                 //set user input values to parse
                 post.setEventText(mEdit.getText().toString());
                 post.setPositive(positive);

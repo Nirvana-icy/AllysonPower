@@ -59,8 +59,6 @@ public class parta extends Activity {
 
 		refreshBtn = (ImageButton) findViewById(R.id.refreshBtn);
 		refreshBtn.setOnClickListener(new refresh());
-		
-		
 	}
 
 	class refresh implements OnClickListener {
