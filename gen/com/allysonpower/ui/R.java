@@ -970,7 +970,6 @@ containing a value of this type.
         public static final int ver=0x7f0200a6;
     }
     public static final class id {
-        public static final int Msglist=0x7f060040;
         public static final int abs__action_bar=0x7f060020;
         public static final int abs__action_bar_container=0x7f06001f;
         public static final int abs__action_bar_subtitle=0x7f060011;
@@ -1010,10 +1009,8 @@ containing a value of this type.
         public static final int abs__textButton=0x7f060013;
         public static final int abs__title=0x7f06001b;
         public static final int abs__up=0x7f06000b;
-        public static final int action_settings=0x7f06005a;
-        public static final int btnHomeLayout=0x7f060046;
-        public static final int btnSentLayout=0x7f060048;
-        public static final int btns_bottom=0x7f06004c;
+        public static final int action_settings=0x7f06004d;
+        public static final int btns_bottom=0x7f06003f;
         public static final int button_help=0x7f060037;
         public static final int button_parta=0x7f060033;
         public static final int button_partb=0x7f060034;
@@ -1021,45 +1018,35 @@ containing a value of this type.
         public static final int button_partd=0x7f060036;
         public static final int disableHome=0x7f060009;
         public static final int edit_query=0x7f060026;
-        public static final int et_mblog=0x7f06004b;
+        public static final int et_mblog=0x7f06003e;
         public static final int grid_wel_page=0x7f060032;
         public static final int homeAsUp=0x7f060006;
-        public static final int ib_insert_location=0x7f060051;
-        public static final int ib_insert_pic=0x7f060052;
-        public static final int ib_negative=0x7f060050;
-        public static final int ib_positive=0x7f06004f;
-        public static final int ib_send_msg=0x7f060053;
-        public static final int layout=0x7f06003c;
+        public static final int ib_insert_location=0x7f060044;
+        public static final int ib_insert_pic=0x7f060045;
+        public static final int ib_negative=0x7f060043;
+        public static final int ib_positive=0x7f060042;
+        public static final int ib_send_msg=0x7f060046;
         public static final int listMode=0x7f060002;
-        public static final int ll_operation_thesame=0x7f06004d;
-        public static final int loading=0x7f060045;
-        public static final int loadingLayout=0x7f060044;
-        public static final int loadingding=0x7f060043;
-        public static final int loadingdingLayout=0x7f060042;
-        public static final int lySuggestion=0x7f06004a;
+        public static final int ll_operation_thesame=0x7f060040;
+        public static final int lySuggestion=0x7f06003d;
         public static final int mgarea=0x7f060039;
         public static final int mgcontent=0x7f06003b;
         public static final int mgsubject=0x7f060038;
         public static final int mgtime=0x7f06003a;
         public static final int normal=0x7f060001;
-        public static final int pull_to_refresh_header=0x7f060054;
-        public static final int pull_to_refresh_image=0x7f060056;
-        public static final int pull_to_refresh_progress=0x7f060055;
-        public static final int pull_to_refresh_text=0x7f060057;
-        public static final int pull_to_refresh_updated_at=0x7f060058;
-        public static final int refreshBtn=0x7f06003f;
-        public static final int rl_all_edit=0x7f060049;
-        public static final int rlogo=0x7f06003d;
+        public static final int pull_to_refresh_header=0x7f060047;
+        public static final int pull_to_refresh_image=0x7f060049;
+        public static final int pull_to_refresh_progress=0x7f060048;
+        public static final int pull_to_refresh_text=0x7f06004a;
+        public static final int pull_to_refresh_updated_at=0x7f06004b;
+        public static final int rl_all_edit=0x7f06003c;
         public static final int showCustom=0x7f060008;
         public static final int showHome=0x7f060005;
-        public static final int showName=0x7f06003e;
         public static final int showTitle=0x7f060007;
         public static final int tabMode=0x7f060003;
-        public static final int toolbarLayout=0x7f060041;
-        public static final int tv_extra_feature_desc=0x7f06004e;
+        public static final int tv_extra_feature_desc=0x7f060041;
         public static final int useLogo=0x7f060004;
-        public static final int user_exit=0x7f060047;
-        public static final int wel_page=0x7f060059;
+        public static final int wel_page=0x7f06004c;
         public static final int wrap_content=0x7f060000;
     }
     public static final class integer {
@@ -1090,12 +1077,11 @@ containing a value of this type.
         public static final int activity_ini_page=0x7f030015;
         public static final int message=0x7f030016;
         public static final int parta_home=0x7f030017;
-        public static final int partb_home=0x7f030018;
-        public static final int post_new_msg=0x7f030019;
-        public static final int pull_to_refresh_header=0x7f03001a;
-        public static final int sherlock_spinner_dropdown_item=0x7f03001b;
-        public static final int sherlock_spinner_item=0x7f03001c;
-        public static final int wel_page=0x7f03001d;
+        public static final int post_new_msg=0x7f030018;
+        public static final int pull_to_refresh_header=0x7f030019;
+        public static final int sherlock_spinner_dropdown_item=0x7f03001a;
+        public static final int sherlock_spinner_item=0x7f03001b;
+        public static final int wel_page=0x7f03001c;
     }
     public static final class menu {
         public static final int ini_page=0x7f0c0000;
@@ -1146,6 +1132,7 @@ containing a value of this type.
         public static final int hello_world=0x7f050013;
         public static final int loading=0x7f050015;
         public static final int locating=0x7f050017;
+        public static final int no_more_news=0x7f05001a;
         public static final int plz_input_sth=0x7f050019;
         public static final int pull_to_refresh_pull_label=0x7f050001;
         public static final int pull_to_refresh_refreshing_label=0x7f050003;

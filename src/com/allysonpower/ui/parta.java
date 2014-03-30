@@ -1,174 +1,170 @@
 package com.allysonpower.ui;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
+import android.app.Activity;
+
+import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
 
-import org.apache.http.HttpResponse;
-import org.apache.http.message.BasicNameValuePair;
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import android.app.Activity;
-import android.content.Intent;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
+import android.app.ListActivity;
+import android.graphics.Color;
+import android.location.Location;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.view.Gravity;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
-import android.widget.BaseAdapter;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageButton;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.ListView;
-import android.widget.PopupWindow;
-import android.widget.TableRow.LayoutParams;
+import android.util.Log;
+import android.widget.ArrayAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.allysonpower.parse.NewsInfo;
+import com.allysonpower.parse.AllysonNewsInfo;
+import com.markupartist.android.widget.PullToRefreshListView;
+import com.markupartist.android.widget.PullToRefreshListView.OnRefreshListener;
+import com.parse.CountCallback;
+import com.parse.FindCallback;
+import com.parse.Parse;
+import com.parse.ParseException;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
+import com.parse.ParseQueryAdapter;
 
-public class parta extends Activity {
-	LinearLayout loadingLayout;
-	ImageButton refreshBtn;
-	
-	private List<NewsInfo> newsList;
+public class parta extends ListActivity {    
+    private ParseQuery<AllysonNewsInfo> query;
 
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.parta_home);
+    private LinkedList<String> mListItems_News;
+    private LinkedList<String> mListItems_UploadTime;
+    
+    private int pullDownTimes = 0;  //Èç¹û×Ü¹²ÓĞ50Ìõnews  ÓÃ»§Á¬Ğøpull downÊ®´Î..´ËÊ±ÔÚµÚÁù´Îpull downµÄÊ±ºò ÎÒÃÇ¾Í²»È¥query·şÎñÆ÷ÁË ÒòÎªÔÙ´Îquery ³ÌĞò»áfc
+    private int howManyNews = 0;  //ParseÖĞ ×Ü¹²´æ´¢ÁË¶àÉÙnews
+    private int numOfItmesInOnePage = 10;  //×Ô¶¨ÒåµÄ Ã¿Ò»Ò³ÏÔÊ¾¶àÉÙÌõnews
 
-		loadingLayout = (LinearLayout) findViewById(R.id.loadingLayout);
 
-		refreshBtn = (ImageButton) findViewById(R.id.refreshBtn);
-		refreshBtn.setOnClickListener(new refresh());
-	}
-
-	class refresh implements OnClickListener {
-
-		@Override
-		public void onClick(View v) {
-			newsList.clear();
-			loadingLayout.setVisibility(View.VISIBLE);
-			OpenThread();
-		}
-	}
-
-	//ç‚¹å‡»æ›´æ–°å å¯åŠ¨çš„åŠ è½½æ•°æ®çš„çº¿ç¨‹
-	public void OpenThread() {
-
-		new Thread() {
+    /** Called when the activity is first created. */
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.parta_home);
+        
+        // Set a listener to be invoked when the list should be refreshed.
+        ((PullToRefreshListView) getListView()).setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                // Do work to refresh the list here.
+                new GetDataTask().execute();
+            }
+        });
+        
+        //regist the subclass of ParseObject first and then call Parse.initialize
+        ParseObject.registerSubclass(AllysonNewsInfo.class);
+        Parse.initialize(this, "bDExeWi2vct7yqm52r5WPnEiuNyorLu9B2tSFREW", "MvzGGKqOt5Q56inQCPNpbYLAaiJmtykCjgh93C1K");
+        
+		query = ParseQuery.getQuery(AllysonNewsInfo.class);
+		
+		query.orderByDescending("updatedAt");
+		query.setLimit(numOfItmesInOnePage); 
+		//launch partb => load the latestest 10 news automatically
+		query.findInBackground(new FindCallback<AllysonNewsInfo>() {
 			@Override
-			public void run() {
-				//Parse loadä¸Šåæ¡news  (ç®€åŒ–é—®é¢˜ Allysonpowerå¯åŠ¨åŠ è½½æœ€æ–°çš„åæ¡news  ç‚¹å‡»refresæŒ‰é’®å åŠ è½½ä¸Šåæ¡news ..è¿™æ ·refresæŒ‰é’®éœ€è¦æ”¹åå­—)
-				//Parse retrive data code here
-				
-				//å°†è·å–åˆ°çš„news ä»¥æ­¤åŒ¹é…åˆ°newsListä¸Š  need to do:å°†newsListæ”¹é€ ä¸ºåŒ¹é…Allysonpoweræ•°æ®å­—æ®µçš„list..
-				for (int i = 0; i < 10; i++) {
-					if (newsList == null) {
-						newsList = new ArrayList<NewsInfo>();
+			public void done(List<AllysonNewsInfo> newsList, ParseException e) {
+				// TODO Auto-generated method stub
+				if (e == null) {
+					Log.i("com.allysonpower.ui.GetNewsFromParse", "Retrieved " + newsList.size() + " news from Parse.");
+					mListItems_News = new LinkedList<String>();
+					mListItems_UploadTime  = new LinkedList<String>();;
+					for(int i = 0; i < newsList.size(); i++)
+					{
+						//ÒÀ´Î½«Ã¿Ò»Ìõ´ÓParse retrievedµÄnews Ìí¼Óµ½listÖĞ
+						mListItems_News.add(newsList.get(i).getEventText());
+						Log.i("com.allysonpower.ui.paartb.GetNewsFromParse", "GetNewsEventText:" + newsList.get(i).getEventText());
+						if(newsList.get(i).getPositive())
+							mListItems_UploadTime.add("Positive!   Post@" + newsList.get(i).getPostTime().toLocaleString());
+						else
+							mListItems_UploadTime.add("Negative..  Post@" + newsList.get(i).getPostTime().toLocaleString());
 					}
-					NewsInfo newsInfo = new NewsInfo();
-					newsInfo.setEventText("Event Text test...");
-					newsInfo.setPositive(true);
+					//Ê¹ÓÃÏµÍ³×Ô´øµÄlist Ã¿¸öListItemÓĞÁ½ĞĞ  µÚÒ»ĞĞ´ó×ÖÌåÏÔÊ¾newsĞÅÏ¢£¨android.R.id.text1£©  µÚ¶şĞĞĞ¡×ÖÌåÏÔÊ¾ ÉÏ´«Ê±¼ä£¨android.R.id.text2£©
+					//¸ù¾İ´Óparse»ñÈ¡µ½µÄÊı¾İ ÉèÖÃµÚÒ»ĞĞÎÄ×Ö  android.R.id.text1
+					ArrayAdapter<String> adapterNews = new ArrayAdapter<String>(getApplicationContext(),
+			                android.R.layout.simple_list_item_2, android.R.id.text1, mListItems_News);
+										
+			        setListAdapter(adapterNews);
+			        //¸ù¾İ´Óparse»ñÈ¡µÀµÂÊı¾İ ÉèÖÃµÚ¶şĞĞÎÄ×Ö android.R.id.text1
+			        ArrayAdapter<String> adapterUploadTime = new ArrayAdapter<String>(getApplicationContext(),
+			                android.R.layout.simple_list_item_2, android.R.id.text2, mListItems_UploadTime);
 					
-					newsList.add(newsInfo);
+			        setListAdapter(adapterUploadTime);
+					//Get how many news after the first qurey
+					query.countInBackground(new CountCallback() {
+						  public void done(int count, ParseException e) {
+						    if (e == null) howManyNews = count;
+						    else howManyNews = numOfItmesInOnePage;
+						  }
+						});
+				} else {
+					Log.d("com.allysonpower.ui.partb.GetNewsFromParse", "Error:" + e.getMessage());
 				}
-				//æ•°æ®æ›´æ–°å å‘é€msg æ¶ˆé™¤åœ¨è½¬åŠ¨çš„spinner
-				//Message message = handler.obtainMessage(0);
-				//handler.sendMessage(message); 
 			}
-		}.start();
-	}
+		});
+    }
 
-	Handler handler = new Handler() {
-		public void handleMessage(Message message) {
-			if (newsList != null) {
-				//WeiBoAdapater adapater = new WeiBoAdapater();
-//				ListView Msglist = (ListView) findViewById(R.id.Msglist);
-//				Msglist.setOnItemClickListener(new OnItemClickListener() {
-//					@Override
-//					public void onItemClick(AdapterView<?> arg0, View view,
-//							int arg2, long arg3) {
-//						Object obj = view.getTag();
-//						if (obj != null) {
-//							String id = obj.toString();
-							//news è¯¦æƒ…activity  å¾…å®ç°
-//							Intent intent = new Intent(parta.this,
-//									ViewActivity.class);
-//							Bundle b = new Bundle();
-//							b.putString("key", id);
-//							intent.putExtras(b);
-//							startActivity(intent);
-//						}
-//					}
+    private class GetDataTask extends AsyncTask<Void, Void, String[]> {
 
-//				});
+        @Override
+        protected String[] doInBackground(Void... params) {
+        	
+            return mStrings;
+        }
 
-				/*
-				 * adapater.notifyDataSetChanged();
-				 * Msglist.clearDisappearingChildren();
-				 */
-//				Msglist.setAdapter(adapater);
-//				loadingdingLayout.setVisibility(View.GONE);
-			}
-		}
-	};
-//End of load more data
-	
-//	public class WeiBoAdapater extends BaseAdapter {
-//
-//		@Override
-//		public int getCount() {
-//			return newsList.size();
-//		}
-//
-//		@Override
-//		public Object getItem(int position) {
-//			return newsList.get(position);
-//		}
-//
-//		@Override
-//		public long getItemId(int position) {
-//			return position;
-//		}
+        @Override
+        protected void onPostExecute(String[] result) {
+        	pullDownTimes++;
+        	//Èç¹û»¹ÓĞ¸ü¶ànews Ôò¼ÌĞøquery from parse 
+        	if(pullDownTimes*numOfItmesInOnePage < howManyNews) 
+        	{
+        		query.setSkip(pullDownTimes*numOfItmesInOnePage);   //You can skip the first results with setSkip. This can be useful for pagination:
+        		query.findInBackground(new FindCallback<AllysonNewsInfo>() {
+        			@Override
+        			public void done(List<AllysonNewsInfo> newsList, ParseException e) {
+        				// TODO Auto-generated method stub
+        				if (e == null) {
+        					Log.i("com.allysonpower.ui.GetNewsFromParse", "Retrieved " + newsList.size() + " news from Parse.");
+        					mListItems_News = new LinkedList<String>();
+        					mListItems_UploadTime  = new LinkedList<String>();;
+        					for(int i = 0; i < newsList.size(); i++)
+        					{
+        						//ÒÀ´Î½«Ã¿Ò»Ìõ´ÓParse retrievedµÄnews Ìí¼Óµ½listÖĞ
+        						mListItems_News.add(newsList.get(i).getEventText());
+        						if(newsList.get(i).getPositive())
+        							mListItems_UploadTime.add("Positive!   Post@" + newsList.get(i).getPostTime().toLocaleString());
+        						else
+        							mListItems_UploadTime.add("Negative..  Post@" + newsList.get(i).getPostTime().toLocaleString());
+        						Log.i("com.allysonpower.ui.paartb.GetNewsFromParse", "GetNewsEventText:" + newsList.get(i).getEventText());
+        					}
+        					//Ê¹ÓÃÏµÍ³×Ô´øµÄlist Ã¿¸öListItemÓĞÁ½ĞĞ  µÚÒ»ĞĞ´ó×ÖÌåÏÔÊ¾newsĞÅÏ¢£¨android.R.id.text1£©  µÚ¶şĞĞĞ¡×ÖÌåÏÔÊ¾ ÉÏ´«Ê±¼ä£¨android.R.id.text2£©
+        					//¸ù¾İ´Óparse»ñÈ¡µ½µÄÊı¾İ ÉèÖÃµÚÒ»ĞĞÎÄ×Ö  android.R.id.text1
+        					ArrayAdapter<String> adapterNews = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_list_item_2, android.R.id.text1, mListItems_News);
+    										
+        					setListAdapter(adapterNews);
+        					//¸ù¾İ´Óparse»ñÈ¡µÀµÂÊı¾İ ÉèÖÃµÚ¶şĞĞÎÄ×Ö android.R.id.text1
+        					ArrayAdapter<String> adapterUploadTime = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_list_item_2, android.R.id.text2, mListItems_UploadTime);
+    					
+        					setListAdapter(adapterUploadTime);
+        				} 
+        				else {
+        					Log.d("com.allysonpower.ui.partb.GetNewsFromParse", "Error:" + e.getMessage());
+        				}
+        			}
+        		});
+        		// Call onRefreshComplete when the list has been refreshed.
+        		((PullToRefreshListView) getListView()).onRefreshComplete();
+        		super.onPostExecute(result);
+        	}
+        	else
+        		Toast.makeText(getApplicationContext(), R.string.no_more_news, Toast.LENGTH_SHORT).show();
+        }
+   }
 
-//		@Override
-//		public View getView(int position, View convertView, ViewGroup parent) {
-//			convertView = LayoutInflater.from(getApplicationContext()).inflate(
-//					R.layout.weibo, null);
-//			WeiBoHolder wh = new WeiBoHolder();
-//			wh.wbicon = (ImageView) convertView.findViewById(R.id.wbicon);
-//			wh.wbtext = (TextView) convertView.findViewById(R.id.wbtext);
-//			wh.wbtime = (TextView) convertView.findViewById(R.id.wbtime);
-//			wh.wbuser = (TextView) convertView.findViewById(R.id.wbuser);
-//			wh.wbimage = (ImageView) convertView.findViewById(R.id.wbimage);
-//			NewsInfo wb = newsList.get(position);
-//			if (wb != null) {
-//				convertView.setTag(wb.getId());
-//				wh.wbuser.setText(wb.getUserName());
-//				wh.wbtime.setText(wb.getTime());
-//				wh.wbtext.setText(wb.getText(), TextView.BufferType.SPANNABLE);
-//			}
-//
-//			return convertView;
-//		}
-//	}
+    private String[] mStrings = {"AllysonPower", "Pull to refresh."};
 }
+        
+

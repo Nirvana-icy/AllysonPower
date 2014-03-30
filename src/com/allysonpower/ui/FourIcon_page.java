@@ -42,7 +42,7 @@ public class FourIcon_page extends Activity {
 	    		{@Override
 			     public void onClick(View view) {
 				// TODO Auto-generated method stub
-				Intent intent= new Intent(view.getContext(),partb.class);
+				Intent intent= new Intent(view.getContext(),parta.class);
 			    startActivityForResult(intent,0);
 			    }});
 		//Jump to part c

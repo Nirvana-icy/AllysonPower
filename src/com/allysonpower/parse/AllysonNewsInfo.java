@@ -1,5 +1,7 @@
 package com.allysonpower.parse;
 
+import java.util.Date;
+
 import com.parse.ParseClassName;
 import com.parse.ParseGeoPoint;
 import com.parse.ParseObject;
@@ -33,6 +35,10 @@ public class AllysonNewsInfo extends ParseObject {
 	public void setLocation(double latitude,double longitude) {
 		ParseGeoPoint location = new ParseGeoPoint(latitude, longitude);
 		put("Location", location);
+	}
+	
+	public Date getPostTime() {
+		return getUpdatedAt();
 	}
 	
 //	//convenient getQuery method

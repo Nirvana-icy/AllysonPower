@@ -13,14 +13,14 @@ public final class R {
 		public static final int pull_to_refresh_header_background = 0x7f020094;
 	}
 	public static final class id {
-		public static final int pull_to_refresh_header = 0x7f060054;
-		public static final int pull_to_refresh_image = 0x7f060056;
-		public static final int pull_to_refresh_progress = 0x7f060055;
-		public static final int pull_to_refresh_text = 0x7f060057;
-		public static final int pull_to_refresh_updated_at = 0x7f060058;
+		public static final int pull_to_refresh_header = 0x7f060047;
+		public static final int pull_to_refresh_image = 0x7f060049;
+		public static final int pull_to_refresh_progress = 0x7f060048;
+		public static final int pull_to_refresh_text = 0x7f06004a;
+		public static final int pull_to_refresh_updated_at = 0x7f06004b;
 	}
 	public static final class layout {
-		public static final int pull_to_refresh_header = 0x7f03001a;
+		public static final int pull_to_refresh_header = 0x7f030019;
 	}
 	public static final class string {
 		public static final int app_name = 0x7f050000;

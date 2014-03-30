@@ -93,7 +93,7 @@ public class partd extends BaseActivity implements OnClickListener
 
     public void initView() {
         this.setContentView(R.layout.post_new_msg);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
 
         aq = new AQuery(this);
 
