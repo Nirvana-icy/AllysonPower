@@ -41,8 +41,35 @@ public class AllysonNewsInfo extends ParseObject {
 		return getUpdatedAt();
 	}
 	
-//	//convenient getQuery method
-//	public static ParseQuery<AllysonNewsInfo> getQuery() {
-//		return ParseQuery.getQuery(AllysonNewsInfo.class);
-//	}
+	public boolean getDGB_Boolean() {
+		return getBoolean("Post_To_DGB");
+	}
+	
+	public void setDGB_Boolean(boolean boolPositive) {
+		put("Post_To_DGB", boolPositive);
+	}
+	
+	public boolean getTYB_Boolean() {
+		return getBoolean("Post_To_TYB");
+	}
+	
+	public void setTYB_Boolean(boolean boolPositive) {
+		put("Post_To_TYB", boolPositive);
+	}
+	
+	public boolean getNHRB_Boolean() {
+		return getBoolean("Post_To_NHRB");
+	}
+	
+	public void setNHRB_Boolean(boolean boolPositive) {
+		put("Post_To_NHRB", boolPositive);
+	}
+	
+	public boolean getXDRB_Boolean() {
+		return getBoolean("Post_To_XDRB");
+	}
+	
+	public void setXDRB_Boolean(boolean boolPositive) {
+		put("Post_To_XDRB", boolPositive);
+	}
 }

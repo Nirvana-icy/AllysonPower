@@ -3,6 +3,61 @@
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical" >
+
+    <TextView 
+    	android:layout_width="fill_parent"
+    	android:layout_height="wrap_content"
+    	android:id="@+id/kuanTextView1"
+    	android:textSize="34px"
+    	android:text="@string/partd_title"/>
+    
+    <LinearLayout
+        android:id="@+id/LinearLayout01"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1.0"
+        android:baselineAligned="false"
+        android:orientation="horizontal" >
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="1.0" >
+
+            <ImageButton
+                android:id="@+id/ib_dgb"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="1.0"
+                android:background="@drawable/bg_btn"
+                android:src="@drawable/btn_dgb" />
+            
+            <ImageButton
+                android:id="@+id/ib_tyb"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="1.0"
+                android:background="@drawable/bg_btn"
+                android:src="@drawable/btn_tyb" />
+
+            <ImageButton
+                android:id="@+id/ib_nhrb"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="1.0"
+                android:background="@drawable/bg_btn"
+                android:src="@drawable/btn_nhrb" />
+
+            <ImageButton
+                android:id="@+id/ib_xdrb"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="1.0"
+                android:background="@drawable/bg_btn"
+                android:src="@drawable/btn_xdrb" />
+
+        </LinearLayout>
+    </LinearLayout>
             
     <RelativeLayout
         android:id="@+id/rl_all_edit"
@@ -104,6 +159,5 @@
         </LinearLayout>
 
     </RelativeLayout>
-
         
 </LinearLayout>

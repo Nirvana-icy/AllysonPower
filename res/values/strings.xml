@@ -11,4 +11,5 @@
     <string name="sending">sending</string>
     <string name="plz_input_sth">Please input something.</string>
     <string name="no_more_news">No more news.</string>
+    <string name="partd_title">Post to the following media:</string>
 </resources>

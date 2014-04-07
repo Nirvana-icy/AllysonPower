@@ -64,7 +64,7 @@ public class parta extends ListActivity {
         
 		query = ParseQuery.getQuery(AllysonNewsInfo.class);
 		
-		query.orderByDescending("updatedAt");
+		query.orderByDescending("createAt");
 		query.setLimit(numOfItmesInOnePage); 
 		//launch partb => load the latestest 10 news automatically
 		query.findInBackground(new FindCallback<AllysonNewsInfo>() {

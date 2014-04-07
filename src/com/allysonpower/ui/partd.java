@@ -69,7 +69,11 @@ public class partd extends BaseActivity implements OnClickListener
     private boolean mIsLocation = false;
     private boolean mLocationGetting = false;
     private boolean positive = true;
-
+    private boolean dgb_positive = true;
+    private boolean tyb_positive = true;
+    private boolean xdrb_positive = true;
+    private boolean nhrb_positive = true;
+    
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
@@ -102,6 +106,10 @@ public class partd extends BaseActivity implements OnClickListener
         aq.id(R.id.ib_insert_pic).clicked(this);
         aq.id(R.id.ib_insert_location).clicked(this);
         aq.id(R.id.ib_send_msg).clicked(this);
+        aq.id(R.id.ib_dgb).clicked(this);
+        aq.id(R.id.ib_tyb).clicked(this);
+        aq.id(R.id.ib_nhrb).clicked(this);
+        aq.id(R.id.ib_xdrb).clicked(this);
 
         mEdit = (EditText) this.findViewById(R.id.et_mblog);
 
@@ -179,6 +187,86 @@ private final LocationListener locationListener = new LocationListener() {
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //	   partd btn点击 消息响应函数聚集地..       
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    private void DGBBtnIsClicked()
+    {
+    	if(!dgb_positive)     
+    	{
+    		dgb_positive = true;
+    		//Get the btn
+    		ImageButton positiveBtn = (ImageButton)findViewById(R.id.ib_dgb);
+    		//高亮 positiveBtn
+    		positiveBtn.setImageDrawable(getResources().getDrawable(R.drawable.btn_dgb));
+    	}
+    	else
+    	{
+    		dgb_positive = false;
+    		//Get the btn
+    		ImageButton positiveBtn = (ImageButton)findViewById(R.id.ib_dgb);
+    		//高亮 positiveBtn
+    		positiveBtn.setImageDrawable(getResources().getDrawable(R.drawable.btn_dgb_unselected));
+    	}
+    }
+    
+    private void TYBBtnIsClicked()
+    {
+    	if(!tyb_positive)     
+    	{
+    		tyb_positive = true;
+    		//Get the btn
+    		ImageButton positiveBtn = (ImageButton)findViewById(R.id.ib_tyb);
+    		//高亮 positiveBtn
+    		positiveBtn.setImageDrawable(getResources().getDrawable(R.drawable.btn_tyb));
+    	}
+    	else
+    	{
+    		tyb_positive = false;
+    		//Get the btn
+    		ImageButton positiveBtn = (ImageButton)findViewById(R.id.ib_tyb);
+    		//高亮 positiveBtn
+    		positiveBtn.setImageDrawable(getResources().getDrawable(R.drawable.btn_tyb_unselected));
+    	}
+    }
+    
+    private void XDRBBtnIsClicked()
+    {
+    	if(!xdrb_positive)     
+    	{
+    		xdrb_positive = true;
+    		//Get the btn
+    		ImageButton positiveBtn = (ImageButton)findViewById(R.id.ib_xdrb);
+    		//高亮 positiveBtn
+    		positiveBtn.setImageDrawable(getResources().getDrawable(R.drawable.btn_xdrb));
+    	}
+    	else
+    	{
+    		xdrb_positive = false;
+    		//Get the btn
+    		ImageButton positiveBtn = (ImageButton)findViewById(R.id.ib_xdrb);
+    		//高亮 positiveBtn
+    		positiveBtn.setImageDrawable(getResources().getDrawable(R.drawable.btn_xdrb_unselected));
+    	}
+    }
+    
+    private void NHRBBtnIsClicked()
+    {
+    	if(!nhrb_positive)     
+    	{
+    		nhrb_positive = true;
+    		//Get the btn
+    		ImageButton positiveBtn = (ImageButton)findViewById(R.id.ib_nhrb);
+    		//高亮 positiveBtn
+    		positiveBtn.setImageDrawable(getResources().getDrawable(R.drawable.btn_nhrb));
+    	}
+    	else
+    	{
+    		nhrb_positive = false;
+    		//Get the btn
+    		ImageButton positiveBtn = (ImageButton)findViewById(R.id.ib_nhrb);
+    		//高亮 positiveBtn
+    		positiveBtn.setImageDrawable(getResources().getDrawable(R.drawable.btn_nhrb_unselected));
+    	}
+    }
+    
     private void positiveBtnIsClicked()
     {
     	if(!positive)     //默认positive是true(大拇指向上的图标高亮). 当positive是false的时候->大拇指向上的图标是灰色的.此时用户点击这个btn 高亮它.
@@ -282,6 +370,10 @@ private final LocationListener locationListener = new LocationListener() {
                 //set user input values to parse
                 post.setEventText(mEdit.getText().toString());
                 post.setPositive(positive);
+                post.setDGB_Boolean(dgb_positive);
+                post.setTYB_Boolean(tyb_positive);
+                post.setNHRB_Boolean(nhrb_positive);
+                post.setXDRB_Boolean(xdrb_positive);
                 post.setLocation(mLatitude, mLongitude);
                 // Save the post
                 post.saveInBackground();
@@ -309,6 +401,18 @@ private final LocationListener locationListener = new LocationListener() {
         case android.R.id.home:
             NavUtils.navigateUpFromSameTask(this);
             break;
+        case R.id.ib_dgb:
+        	DGBBtnIsClicked();
+        	break;
+        case R.id.ib_tyb:
+        	TYBBtnIsClicked();
+        	break;
+        case R.id.ib_xdrb:
+        	XDRBBtnIsClicked();
+        	break;
+        case R.id.ib_nhrb:
+        	NHRBBtnIsClicked();
+        	break;
         case R.id.ib_positive:
         	positiveBtnIsClicked();
         	break;
