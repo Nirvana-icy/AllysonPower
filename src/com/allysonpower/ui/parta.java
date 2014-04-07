@@ -2,9 +2,12 @@ package com.allysonpower.ui;
 
 import android.app.Activity;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 import android.app.ListActivity;
 import android.graphics.Color;
@@ -15,6 +18,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 import android.widget.ArrayAdapter;
+import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -32,8 +36,7 @@ import com.parse.ParseQueryAdapter;
 public class parta extends ListActivity {    
     private ParseQuery<AllysonNewsInfo> query;
 
-    private LinkedList<String> mListItems_News;
-    private LinkedList<String> mListItems_UploadTime;
+    private List<Map<String, String>> newsData = new ArrayList<Map<String,String>>();  
     
     private int pullDownTimes = 0;  //如果总共有50条news  用户连续pull down十次..此时在第六次pull down的时候 我们就不去query服务器了 因为再次query 程序会fc
     private int howManyNews = 0;  //Parse中 总共存储了多少news
@@ -65,34 +68,33 @@ public class parta extends ListActivity {
 		query.setLimit(numOfItmesInOnePage); 
 		//launch partb => load the latestest 10 news automatically
 		query.findInBackground(new FindCallback<AllysonNewsInfo>() {
+			@SuppressWarnings("deprecation")
 			@Override
 			public void done(List<AllysonNewsInfo> newsList, ParseException e) {
 				// TODO Auto-generated method stub
 				if (e == null) {
 					Log.i("com.allysonpower.ui.GetNewsFromParse", "Retrieved " + newsList.size() + " news from Parse.");
-					mListItems_News = new LinkedList<String>();
-					mListItems_UploadTime  = new LinkedList<String>();;
+					
+					//组合list中每一行的string内容  lsit中每一行中包含两小行 第一行大字体显示news信息（android.R.id.text1）  第二行小字体显示 上传时间（android.R.id.text2） 
 					for(int i = 0; i < newsList.size(); i++)
 					{
-						//依次将每一条从Parse retrieved的news 添加到list中
-						mListItems_News.add(newsList.get(i).getEventText());
+						Map<String, String> map = new HashMap<String, String>();
+				        map.put("News_Text", newsList.get(i).getEventText()); 
 						Log.i("com.allysonpower.ui.paartb.GetNewsFromParse", "GetNewsEventText:" + newsList.get(i).getEventText());
 						if(newsList.get(i).getPositive())
-							mListItems_UploadTime.add("Positive!   Post@" + newsList.get(i).getPostTime().toLocaleString());
+							map.put("News_Property", "Positive!   Post@" + newsList.get(i).getPostTime().toLocaleString());
 						else
-							mListItems_UploadTime.add("Negative..  Post@" + newsList.get(i).getPostTime().toLocaleString());
+							map.put("News_Property", "Negative!   Post@" + newsList.get(i).getPostTime().toLocaleString());
+						
+						newsData.add(map);
+						Log.e("News_Property", newsData.toString());
 					}
-					//使用系统自带的list 每个ListItem有两行  第一行大字体显示news信息（android.R.id.text1）  第二行小字体显示 上传时间（android.R.id.text2）
-					//根据从parse获取到的数据 设置第一行文字  android.R.id.text1
-					ArrayAdapter<String> adapterNews = new ArrayAdapter<String>(getApplicationContext(),
-			                android.R.layout.simple_list_item_2, android.R.id.text1, mListItems_News);
-										
-			        setListAdapter(adapterNews);
-			        //根据从parse获取道德数据 设置第二行文字 android.R.id.text1
-			        ArrayAdapter<String> adapterUploadTime = new ArrayAdapter<String>(getApplicationContext(),
-			                android.R.layout.simple_list_item_2, android.R.id.text2, mListItems_UploadTime);
-					
-			        setListAdapter(adapterUploadTime);
+					//将从parse获得的数据 绑定到list中
+					setListAdapter(new SimpleAdapter(getApplicationContext(),newsData,R.layout.parta_listview_two_text_item,  
+			                new String[]{"News_Text","News_Property"},             
+			                new int[]{android.R.id.text1,android.R.id.text2})
+					);
+	
 					//Get how many news after the first qurey
 					query.countInBackground(new CountCallback() {
 						  public void done(int count, ParseException e) {
@@ -127,28 +129,25 @@ public class parta extends ListActivity {
         			public void done(List<AllysonNewsInfo> newsList, ParseException e) {
         				// TODO Auto-generated method stub
         				if (e == null) {
-        					Log.i("com.allysonpower.ui.GetNewsFromParse", "Retrieved " + newsList.size() + " news from Parse.");
-        					mListItems_News = new LinkedList<String>();
-        					mListItems_UploadTime  = new LinkedList<String>();;
+        					//组合list中每一行的string内容  lsit中每一行中包含两小行 第一行大字体显示news信息（android.R.id.text1）  第二行小字体显示 上传时间（android.R.id.text2） 
         					for(int i = 0; i < newsList.size(); i++)
         					{
-        						//依次将每一条从Parse retrieved的news 添加到list中
-        						mListItems_News.add(newsList.get(i).getEventText());
-        						if(newsList.get(i).getPositive())
-        							mListItems_UploadTime.add("Positive!   Post@" + newsList.get(i).getPostTime().toLocaleString());
-        						else
-        							mListItems_UploadTime.add("Negative..  Post@" + newsList.get(i).getPostTime().toLocaleString());
+        						Map<String, String> map = new HashMap<String, String>();
+        				        map.put("News_Text", newsList.get(i).getEventText()); 
         						Log.i("com.allysonpower.ui.paartb.GetNewsFromParse", "GetNewsEventText:" + newsList.get(i).getEventText());
+        						if(newsList.get(i).getPositive())
+        							map.put("News_Property", "Positive!   Post@" + newsList.get(i).getPostTime().toLocaleString());
+        						else
+        							map.put("News_Property", "Negative!   Post@" + newsList.get(i).getPostTime().toLocaleString());
+        						
+        						newsData.add(map);
+        						Log.e("News_Property", newsData.toString());
         					}
-        					//使用系统自带的list 每个ListItem有两行  第一行大字体显示news信息（android.R.id.text1）  第二行小字体显示 上传时间（android.R.id.text2）
-        					//根据从parse获取到的数据 设置第一行文字  android.R.id.text1
-        					ArrayAdapter<String> adapterNews = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_list_item_2, android.R.id.text1, mListItems_News);
-    										
-        					setListAdapter(adapterNews);
-        					//根据从parse获取道德数据 设置第二行文字 android.R.id.text1
-        					ArrayAdapter<String> adapterUploadTime = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_list_item_2, android.R.id.text2, mListItems_UploadTime);
-    					
-        					setListAdapter(adapterUploadTime);
+        					//将从parse获得的数据 绑定到list中
+        					setListAdapter(new SimpleAdapter(getApplicationContext(),newsData,android.R.layout.simple_list_item_2,  
+        			                new String[]{"News_Text","News_Property"},             
+        			                new int[]{android.R.id.text1,android.R.id.text2})
+        					);
         				} 
         				else {
         					Log.d("com.allysonpower.ui.partb.GetNewsFromParse", "Error:" + e.getMessage());
