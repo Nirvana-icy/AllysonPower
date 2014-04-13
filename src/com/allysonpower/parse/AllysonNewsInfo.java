@@ -7,6 +7,7 @@ import com.parse.ParseGeoPoint;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
+import com.parse.anywall.AnywallPost;
 
 @ParseClassName("News")
 public class AllysonNewsInfo extends ParseObject {
@@ -26,15 +27,6 @@ public class AllysonNewsInfo extends ParseObject {
 	
 	public void setPositive(boolean boolPositive) {
 		put("Positive", boolPositive);
-	}
-	
-	public ParseGeoPoint getLocation() {
-		return getParseGeoPoint("Location");
-	}
-	
-	public void setLocation(double latitude,double longitude) {
-		ParseGeoPoint location = new ParseGeoPoint(latitude, longitude);
-		put("Location", location);
 	}
 	
 	public Date getPostTime() {
@@ -71,5 +63,17 @@ public class AllysonNewsInfo extends ParseObject {
 	
 	public void setXDRB_Boolean(boolean boolPositive) {
 		put("Post_To_XDRB", boolPositive);
+	}
+	
+	public ParseGeoPoint getLocation() {
+		return getParseGeoPoint("location");
+	}
+	
+	public void setLocation(double latitude,double longitude) {
+		ParseGeoPoint location = new ParseGeoPoint(latitude, longitude);
+		put("Location", location);
+	}
+	public static ParseQuery<AllysonNewsInfo> getQuery() {
+		return ParseQuery.getQuery(AllysonNewsInfo.class);
 	}
 }
