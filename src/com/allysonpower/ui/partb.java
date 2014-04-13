@@ -60,6 +60,7 @@ import com.parse.ParseQueryAdapter;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 import com.allysonpower.parse.AllysonNewsInfo;
+import com.allysonpower.util.Util;
 
 public class partb extends FragmentActivity implements LocationListener,
     GooglePlayServicesClient.ConnectionCallbacks,
