@@ -1281,11 +1281,12 @@ containing a value of this type.
         public static final int parta_listview_two_text_item=0x7f030017;
         public static final int partb_around_news_list=0x7f030018;
         public static final int partb_mapview=0x7f030019;
-        public static final int post_new_msg=0x7f03001a;
-        public static final int pull_to_refresh_header=0x7f03001b;
-        public static final int sherlock_spinner_dropdown_item=0x7f03001c;
-        public static final int sherlock_spinner_item=0x7f03001d;
-        public static final int wel_page=0x7f03001e;
+        public static final int partc_home=0x7f03001a;
+        public static final int post_new_msg=0x7f03001b;
+        public static final int pull_to_refresh_header=0x7f03001c;
+        public static final int sherlock_spinner_dropdown_item=0x7f03001d;
+        public static final int sherlock_spinner_item=0x7f03001e;
+        public static final int wel_page=0x7f03001f;
     }
     public static final class menu {
         public static final int ini_page=0x7f0c0000;

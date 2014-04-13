@@ -20,7 +20,7 @@ public final class R {
 		public static final int pull_to_refresh_updated_at = 0x7f060056;
 	}
 	public static final class layout {
-		public static final int pull_to_refresh_header = 0x7f03001b;
+		public static final int pull_to_refresh_header = 0x7f03001c;
 	}
 	public static final class string {
 		public static final int app_name = 0x7f07001a;
