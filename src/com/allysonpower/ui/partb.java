@@ -112,6 +112,9 @@ public class partb extends FragmentActivity implements LocationListener,
   // Maximum post search radius for map in kilometers
   private static final int MAX_POST_SEARCH_DISTANCE = 100;
 
+  //Search radius
+  private static final int METERS_OF_SEARCH_RADIUS = 2000;
+  
   /*
    * Other class member variables
    */
@@ -145,9 +148,9 @@ public class partb extends FragmentActivity implements LocationListener,
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    radius = Application.getSearchDistance();
+    radius = METERS_OF_SEARCH_RADIUS;
     lastRadius = radius;
-    setContentView(R.layout.activity_main);
+    setContentView(R.layout.partb_mapview);
 
     // Create a new global location parameters object
     locationRequest = LocationRequest.create();
@@ -170,9 +173,9 @@ public class partb extends FragmentActivity implements LocationListener,
           public ParseQuery<AllysonNewsInfo> create() {
             Location myLoc = (currentLocation == null) ? lastLocation : currentLocation;
             ParseQuery<AllysonNewsInfo> query = AllysonNewsInfo.getQuery();
-            query.include("user");
+ //           query.include("user");
             query.orderByDescending("createdAt");
-            query.whereWithinKilometers("location", geoPointFromLocation(myLoc), radius
+            query.whereWithinKilometers("Location", geoPointFromLocation(myLoc), radius
                 * METERS_PER_FEET / METERS_PER_KILOMETER);
             query.setLimit(MAX_POST_SEARCH_RESULTS);
             return query;
@@ -184,11 +187,12 @@ public class partb extends FragmentActivity implements LocationListener,
       @Override
       public View getItemView(AllysonNewsInfo post, View view, ViewGroup parent) {
         if (view == null) {
-          view = View.inflate(getContext(), R.layout.anywall_post_item, null);
+          view = View.inflate(getContext(), R.layout.partb_around_news_list, null);
         }
         TextView contentView = (TextView) view.findViewById(R.id.contentView);
-        TextView usernameView = (TextView) view.findViewById(R.id.usernameView);
-        contentView.setText(post.getText());
+        TextView newsInfoView = (TextView) view.findViewById(R.id.newsInfoView);
+        contentView.setText(post.getEventText());
+        contentView.setText(post.getPositive() + post.getPostTime().toLocaleString());
         return view;
       }
     };
@@ -206,7 +210,7 @@ public class partb extends FragmentActivity implements LocationListener,
     // Set up the handler for an item's selection
     postsView.setOnItemClickListener(new OnItemClickListener() {
       public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        final AnywallPost item = posts.getItem(position);
+        final AllysonNewsInfo item = posts.getItem(position);
         selectedObjectId = item.getObjectId();
         map.getMap().animateCamera(
             CameraUpdateFactory.newLatLng(new LatLng(item.getLocation().getLatitude(), item
@@ -237,57 +241,6 @@ public class partb extends FragmentActivity implements LocationListener,
       public void onCameraChange(CameraPosition position) {
         // When the camera changes, update the query
         doMapQuery();
-      }
-    });
-
-    // Set up the handler for the post button click
-    Button postButton = (Button) findViewById(R.id.postButton);
-    postButton.setOnClickListener(new OnClickListener() {
-      public void onClick(View v) {
-        // Only allow posts if we have a location
-        Location myLoc = (currentLocation == null) ? lastLocation : currentLocation;
-        if (myLoc == null) {
-          Toast.makeText(MainActivity.this,
-              "Please try again after your location appears on the map.", Toast.LENGTH_LONG).show();
-          return;
-        }
-        final ParseGeoPoint myPoint = geoPointFromLocation(myLoc);
-        // Create the builder where the new post is entered
-        AlertDialog.Builder alert = new AlertDialog.Builder(MainActivity.this);
-        alert.setTitle("Create a Post");
-        final EditText input = new EditText(MainActivity.this);
-        input.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_CAP_SENTENCES);
-        alert.setView(input);
-        // Handle the dialog input
-        alert.setPositiveButton("Post", new DialogInterface.OnClickListener() {
-          public void onClick(DialogInterface dialog, int which) {
-            // Create a post.
-            AnywallPost post = new AnywallPost();
-            // Set the location to the current user's location
-            post.setLocation(myPoint);
-            post.setText(input.getText().toString());
-            post.setUser(ParseUser.getCurrentUser());
-            ParseACL acl = new ParseACL();
-            // Give public read access
-            acl.setPublicReadAccess(true);
-            post.setACL(acl);
-            // Save the post
-            post.saveInBackground(new SaveCallback() {
-              @Override
-              public void done(ParseException e) {
-                // Update the list view and the map
-                doListQuery();
-                doMapQuery();
-              }
-            });
-          }
-        });
-        alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-          public void onClick(DialogInterface dialog, int which) {
-            // Do nothing.
-          }
-        });
-        alert.create().show();
       }
     });
   }
@@ -327,7 +280,7 @@ public class partb extends FragmentActivity implements LocationListener,
     super.onResume();
 
     // Get the latest search distance preference
-    radius = Application.getSearchDistance();
+    radius = METERS_OF_SEARCH_RADIUS;
     // Checks the last saved location to show cached data if it's available
     if (lastLocation != null) {
       LatLng myLatLng = new LatLng(lastLocation.getLatitude(), lastLocation.getLongitude());
@@ -364,29 +317,21 @@ public class partb extends FragmentActivity implements LocationListener,
       switch (resultCode) {
       // If Google Play services resolved the problem
       case Activity.RESULT_OK:
-
-        if (Application.APPDEBUG) {
           // Log the result
-          Log.d(Application.APPTAG, "Connected to Google Play services");
-        }
-
+          Log.d("AllysonPower", "Connected to Google Play services");
         break;
 
       // If any other result was returned by Google Play services
       default:
-        if (Application.APPDEBUG) {
           // Log the result
-          Log.d(Application.APPTAG, "Could not connect to Google Play services");
-        }
+          Log.d("AllysonPower", "Could not connect to Google Play services");
         break;
       }
 
       // If any other request code was received
     default:
-      if (Application.APPDEBUG) {
         // Report that this Activity received an unknown requestCode
-        Log.d(Application.APPTAG, "Unknown request code received for the activity");
-      }
+        Log.d("AllysonPower", "Unknown request code received for the activity");
       break;
     }
   }
@@ -402,10 +347,8 @@ public class partb extends FragmentActivity implements LocationListener,
 
     // If Google Play services is available
     if (ConnectionResult.SUCCESS == resultCode) {
-      if (Application.APPDEBUG) {
         // In debug mode, log the status
-        Log.d(Application.APPTAG, "Google play services available");
-      }
+        Log.d("AllysonPower", "Google play services available");
       // Continue
       return true;
       // Google Play services was not available for some reason
@@ -415,7 +358,7 @@ public class partb extends FragmentActivity implements LocationListener,
       if (dialog != null) {
         ErrorDialogFragment errorFragment = new ErrorDialogFragment();
         errorFragment.setDialog(dialog);
-        errorFragment.show(getSupportFragmentManager(), Application.APPTAG);
+        errorFragment.show(getSupportFragmentManager(), "AllysonPower");
       }
       return false;
     }
@@ -426,9 +369,7 @@ public class partb extends FragmentActivity implements LocationListener,
    * this point, you can request the current location or start periodic updates
    */
   public void onConnected(Bundle bundle) {
-    if (Application.APPDEBUG) {
-      Log.d("Connected to location services", Application.APPTAG);
-    }
+    Log.d("Connected to location services", "AllysonPower");
     currentLocation = getLocation();
     startPeriodicUpdates();
   }
@@ -437,9 +378,7 @@ public class partb extends FragmentActivity implements LocationListener,
    * Called by Location Services if the connection to the location client drops because of an error.
    */
   public void onDisconnected() {
-    if (Application.APPDEBUG) {
-      Log.d("Disconnected from location services", Application.APPTAG);
-    }
+	  Log.d("Disconnected from location services", "AllysonPower");
   }
 
   /*
@@ -456,10 +395,8 @@ public class partb extends FragmentActivity implements LocationListener,
 
       } catch (IntentSender.SendIntentException e) {
 
-        if (Application.APPDEBUG) {
           // Thrown if Google Play services canceled the original PendingIntent
-          Log.d(Application.APPTAG, "An error occurred when connecting to location services.", e);
-        }
+          Log.d("AllysonPower", "An error occurred when connecting to location services.", e);
       }
     } else {
 
@@ -545,20 +482,18 @@ public class partb extends FragmentActivity implements LocationListener,
     }
     final ParseGeoPoint myPoint = geoPointFromLocation(myLoc);
     // Create the map Parse query
-    ParseQuery<AnywallPost> mapQuery = AnywallPost.getQuery();
+    ParseQuery<AllysonNewsInfo> mapQuery = AllysonNewsInfo.getQuery();
     // Set up additional query filters
-    mapQuery.whereWithinKilometers("location", myPoint, MAX_POST_SEARCH_DISTANCE);
-    mapQuery.include("user");
+    mapQuery.whereWithinKilometers("Location", myPoint, MAX_POST_SEARCH_DISTANCE);
+//    mapQuery.include("user");
     mapQuery.orderByDescending("createdAt");
     mapQuery.setLimit(MAX_POST_SEARCH_RESULTS);
     // Kick off the query in the background
-    mapQuery.findInBackground(new FindCallback<AnywallPost>() {
+    mapQuery.findInBackground(new FindCallback<AllysonNewsInfo>() {
       @Override
-      public void done(List<AnywallPost> objects, ParseException e) {
+      public void done(List<AllysonNewsInfo> objects, ParseException e) {
         if (e != null) {
-          if (Application.APPDEBUG) {
-            Log.d(Application.APPTAG, "An error occurred while querying for map posts.", e);
-          }
+          Log.d("AllysonPower", "An error occurred while querying for map posts.", e);
           return;
         }
         /*
@@ -572,7 +507,7 @@ public class partb extends FragmentActivity implements LocationListener,
         // Posts to show on the map
         Set<String> toKeep = new HashSet<String>();
         // Loop through the results of the search
-        for (AnywallPost post : objects) {
+        for (AllysonNewsInfo post : objects) {
           // Add this post to the list of map pins to keep
           toKeep.add(post.getObjectId());
           // Check for an existing marker for this post
@@ -611,7 +546,7 @@ public class partb extends FragmentActivity implements LocationListener,
             }
             // Display a green marker with the post information
             markerOpts =
-                markerOpts.title(post.getText()).snippet(post.getUser().getUsername())
+                markerOpts.title(post.getEventText()).snippet((true == post.getPositive())?"Postive!":"Negative!")
                     .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
           }
           // Add a new marker
@@ -749,21 +684,6 @@ public class partb extends FragmentActivity implements LocationListener,
 
     return builder.build();
   }
-
-  @Override
-  public boolean onCreateOptionsMenu(Menu menu) {
-    // Inflate the menu; this adds items to the action bar if it is present.
-    getMenuInflater().inflate(R.menu.main, menu);
-
-    menu.findItem(R.id.action_settings).setOnMenuItemClickListener(new OnMenuItemClickListener() {
-      public boolean onMenuItemClick(MenuItem item) {
-        startActivity(new Intent(MainActivity.this, SettingsActivity.class));
-        return true;
-      }
-    });
-    return true;
-  }
-
   /*
    * Show a dialog returned by Google Play services for the connection error code
    */
@@ -783,7 +703,7 @@ public class partb extends FragmentActivity implements LocationListener,
       errorFragment.setDialog(errorDialog);
 
       // Show the error dialog in the DialogFragment
-      errorFragment.show(getSupportFragmentManager(), Application.APPTAG);
+      errorFragment.show(getSupportFragmentManager(), "AllysonPower");
     }
   }
 

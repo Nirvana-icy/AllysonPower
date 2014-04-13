@@ -7,7 +7,6 @@ import com.parse.ParseGeoPoint;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
-import com.parse.anywall.AnywallPost;
 
 @ParseClassName("News")
 public class AllysonNewsInfo extends ParseObject {
