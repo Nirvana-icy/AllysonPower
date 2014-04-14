@@ -37,7 +37,7 @@
         <activity android:name="partb" ></activity>
         <meta-data
             android:name="com.google.android.maps.v2.API_KEY"
-            android:value="YOUR_GOOGLE_ANDROID_MAPS_V2_API_KEY" />
+            android:value="AIzaSyC6nvUnV0epXzMRYZhx-AT_3WEObVup3yk" />
         
         <meta-data android:name="com.google.android.gms.version" 
             android:value="@integer/google_play_services_version" />

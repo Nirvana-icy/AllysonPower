@@ -17,6 +17,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
@@ -98,7 +99,11 @@ public class parta extends ListActivity {
 					//Get how many news after the first qurey
 					query.countInBackground(new CountCallback() {
 						  public void done(int count, ParseException e) {
-						    if (e == null) howManyNews = count;
+						    if (e == null) {
+						    	howManyNews = count;
+						    	//如果第一次查询 返回的news不足一页 则隐藏PullToreFresh
+						    	if(count < numOfItmesInOnePage) ((PullToRefreshListView) getListView()).hiddenPullToRefresh();
+						    }
 						    else howManyNews = numOfItmesInOnePage;
 						  }
 						});
@@ -118,8 +123,13 @@ public class parta extends ListActivity {
         }
 
         @Override
-        protected void onPostExecute(String[] result) {
+        protected void onPostExecute(String[] result) {	
         	pullDownTimes++;
+        	if(howManyNews - pullDownTimes*numOfItmesInOnePage < numOfItmesInOnePage)
+        	{
+        		//如果此页news不足一页 则隐藏PullToRefresh
+            	((PullToRefreshListView) getListView()).hiddenPullToRefresh();
+        	}
         	//如果还有更多news 则继续query from parse 
         	if(pullDownTimes*numOfItmesInOnePage < howManyNews) 
         	{
@@ -160,8 +170,6 @@ public class parta extends ListActivity {
         		((PullToRefreshListView) getListView()).onRefreshComplete();
         		super.onPostExecute(result);
         	}
-        	else
-        		Toast.makeText(getApplicationContext(), R.string.no_more_news, Toast.LENGTH_SHORT).show();
         }
    }
 

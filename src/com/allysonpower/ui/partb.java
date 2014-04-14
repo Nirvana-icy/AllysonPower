@@ -530,10 +530,10 @@ public class partb extends FragmentActivity implements LocationListener,
                 oldMarker.remove();
               }
             }
-            // Display a red marker with a predefined title and no snippet
+            // Display a blue marker with a predefined title and no snippet
             markerOpts =
                 markerOpts.title(getResources().getString(R.string.post_out_of_range)).icon(
-                    BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
+                    BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
           } else {
             // Check for an existing in range marker
             if (oldMarker != null) {
@@ -545,10 +545,18 @@ public class partb extends FragmentActivity implements LocationListener,
                 oldMarker.remove();
               }
             }
-            // Display a green marker with the post information
-            markerOpts =
-                markerOpts.title(post.getEventText()).snippet((true == post.getPositive())?"Postive!":"Negative!")
-                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
+            // Display a red marker with the positive post
+            if(post.getPositive()) {
+            	markerOpts =
+            			markerOpts.title(post.getEventText()).snippet("Positive!")
+            				.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
+            }
+            // Display a yellow marker with the negative post
+            else {
+            	markerOpts =
+                        markerOpts.title(post.getEventText()).snippet("Negative!")
+                            .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_YELLOW));
+            }
           }
           // Add a new marker
           Marker marker = map.getMap().addMarker(markerOpts);

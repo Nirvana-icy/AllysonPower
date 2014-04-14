@@ -32,7 +32,7 @@
                  android:id="@+id/button_partc"
                  android:layout_width="wrap_content"
                  android:layout_height="wrap_content"
-                 android:background="@drawable/btn_search" />
+                 android:background="@drawable/btn_trend" />
 
             <ImageButton
                 android:id="@+id/button_partd"

@@ -339,19 +339,19 @@ public final class R {
 		public static final int sherlock_spinner_item = 0x7f03001e;
 	}
 	public static final class string {
-		public static final int abs__action_bar_home_description = 0x7f07001f;
-		public static final int abs__action_bar_up_description = 0x7f070020;
-		public static final int abs__action_menu_overflow_description = 0x7f070021;
-		public static final int abs__action_mode_done = 0x7f070022;
-		public static final int abs__activity_chooser_view_see_all = 0x7f070023;
-		public static final int abs__activitychooserview_choose_application = 0x7f070024;
-		public static final int abs__searchview_description_clear = 0x7f070029;
-		public static final int abs__searchview_description_query = 0x7f070028;
-		public static final int abs__searchview_description_search = 0x7f070027;
-		public static final int abs__searchview_description_submit = 0x7f07002a;
-		public static final int abs__searchview_description_voice = 0x7f07002b;
-		public static final int abs__shareactionprovider_share_with = 0x7f070025;
-		public static final int abs__shareactionprovider_share_with_application = 0x7f070026;
+		public static final int abs__action_bar_home_description = 0x7f070020;
+		public static final int abs__action_bar_up_description = 0x7f070021;
+		public static final int abs__action_menu_overflow_description = 0x7f070022;
+		public static final int abs__action_mode_done = 0x7f070023;
+		public static final int abs__activity_chooser_view_see_all = 0x7f070024;
+		public static final int abs__activitychooserview_choose_application = 0x7f070025;
+		public static final int abs__searchview_description_clear = 0x7f07002a;
+		public static final int abs__searchview_description_query = 0x7f070029;
+		public static final int abs__searchview_description_search = 0x7f070028;
+		public static final int abs__searchview_description_submit = 0x7f07002b;
+		public static final int abs__searchview_description_voice = 0x7f07002c;
+		public static final int abs__shareactionprovider_share_with = 0x7f070026;
+		public static final int abs__shareactionprovider_share_with_application = 0x7f070027;
 	}
 	public static final class style {
 		public static final int Sherlock___TextAppearance_Small = 0x7f0b0046;

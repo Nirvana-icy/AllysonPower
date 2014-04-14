@@ -202,7 +202,7 @@ private final LocationListener locationListener = new LocationListener() {
     		dgb_positive = false;
     		//Get the btn
     		ImageButton positiveBtn = (ImageButton)findViewById(R.id.ib_dgb);
-    		//∏ﬂ¡¡ positiveBtn
+    		//ª“µÙ positiveBtn
     		positiveBtn.setImageDrawable(getResources().getDrawable(R.drawable.btn_dgb_unselected));
     	}
     }
@@ -222,7 +222,7 @@ private final LocationListener locationListener = new LocationListener() {
     		tyb_positive = false;
     		//Get the btn
     		ImageButton positiveBtn = (ImageButton)findViewById(R.id.ib_tyb);
-    		//∏ﬂ¡¡ positiveBtn
+    		//ª“µÙ positiveBtn
     		positiveBtn.setImageDrawable(getResources().getDrawable(R.drawable.btn_tyb_unselected));
     	}
     }
@@ -242,7 +242,7 @@ private final LocationListener locationListener = new LocationListener() {
     		xdrb_positive = false;
     		//Get the btn
     		ImageButton positiveBtn = (ImageButton)findViewById(R.id.ib_xdrb);
-    		//∏ﬂ¡¡ positiveBtn
+    		//ª“µÙ positiveBtn
     		positiveBtn.setImageDrawable(getResources().getDrawable(R.drawable.btn_xdrb_unselected));
     	}
     }
@@ -262,7 +262,7 @@ private final LocationListener locationListener = new LocationListener() {
     		nhrb_positive = false;
     		//Get the btn
     		ImageButton positiveBtn = (ImageButton)findViewById(R.id.ib_nhrb);
-    		//∏ﬂ¡¡ positiveBtn
+    		//ª“µÙ positiveBtn
     		positiveBtn.setImageDrawable(getResources().getDrawable(R.drawable.btn_nhrb_unselected));
     	}
     }
