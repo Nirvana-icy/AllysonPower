@@ -16,81 +16,20 @@ import com.parse.ParseQuery;
 
 import processing.core.*;  
 
-/*
-public class partc extends PApplet{  
-	private ParseQuery<AllysonNewsInfo> queryA;
-	private ParseQuery<AllysonNewsInfo> queryB;
-	private float positiveCount = 0.0f;
-	private float negativeCount = 0.0f;
-	private int positivePercent = 0;
-    public void setup(){  
-    	//partc 启动后先从parse 获取数据
-    		
-        //regist the subclass of ParseObject first and then call Parse.initialize
-        ParseObject.registerSubclass(AllysonNewsInfo.class);
-        Parse.initialize(this, "bDExeWi2vct7yqm52r5WPnEiuNyorLu9B2tSFREW", "MvzGGKqOt5Q56inQCPNpbYLAaiJmtykCjgh93C1K");
-        //Get query 
-		queryA = ParseQuery.getQuery(AllysonNewsInfo.class);
-		//Query the positive count.
-		queryA.whereEqualTo("Positive", true);
-		queryA.countInBackground(new CountCallback() {
-		  public void done(int count, ParseException e) {
-		    if (e == null) {
-		    	positiveCount = count;
-		      // The count request succeeded. Log the count
-		      Log.d("Positive", "News Count:" + count + ".");
-		    } else {
-		      // The request failed
-		    }
-		  }
-		});
-		//Query the negative count
-		queryB = ParseQuery.getQuery(AllysonNewsInfo.class);
-		queryB.whereEqualTo("Positive", false);
-		queryB.countInBackground(new CountCallback() {
-		  public void done(int count, ParseException e) {
-		    if (e == null) {
-		    	negativeCount = count;
-		      // The count request succeeded. Log the count
-		      Log.d("Negative", "News Count:" + count + ".");
-		    } else {
-		      // The request failed
-		    }
-		  }
-		});	
-		
-		//设置processing绘制参数
-		background(0);
-    }   
-		
-    public void draw(){ 
-    	if(0 != positiveCount && 0 != negativeCount)
-    	{
-    		//红色矩形绘制出positive news的占比
-    		fill(255,0,0);
-    		rect((float)0, (float)(height*0.5*0.5), (float)(positiveCount/(positiveCount+negativeCount))*width,(float)(height*0.2));
-    		//黑色矩形绘制出negative news的占比
-    		fill(255);
-    		rect((float)(positiveCount/(positiveCount+negativeCount))*width, (float)(height*0.5*0.5), width,(float)(height*0.2));
-    		//文本输出占比信息
-    		textSize(32); 
-    		fill(0, 102, 153);
-    		positivePercent = (int)(positiveCount/(positiveCount+negativeCount)*100);
-    		text("Positive news:" + positivePercent +"%.", (float)(0.2*width), (float)(height*0.75));
-    	}
-    }  
-}
-*/
-
 public class partc extends PApplet{  
 	private ParseQuery<AllysonNewsInfo> query;
 	private int NUM_OF_NEWS_TO_SHOW = 100;
 	private boolean positveArray[];
 	private int newsRetrieved = 0;
-	private int r = (int)((width/NUM_OF_NEWS_TO_SHOW)*0.5);
 	
 	private int textAreaBaseY = height - width;
 	private int circleDrawTimeInterval = 0;
+	
+	private int timeDelta = 0;
+	private int positiveCount = 0;
+	
+	private int positiveStepCount = 0;
+	private int negativeStepCount = 0;
 
     public void setup(){  
     	positveArray = new boolean[NUM_OF_NEWS_TO_SHOW];	
@@ -116,6 +55,8 @@ public class partc extends PApplet{
 					for(int i = newsList.size() - 1; i >= 0; i--)  //因为是按照时间降序查询到的newslist 我们这里反向从数组最后一位开始 获取positive状态
 					{
 						positveArray[newsList.size() - 1 - i] = newsList.get(i).getPositive(); 
+						if(positveArray[newsList.size() - 1 - i]) 
+							positiveCount++; //统计positive news的数目
 					}
 				}
 				else {
@@ -125,24 +66,45 @@ public class partc extends PApplet{
 		});	
 		
 		//设置processing绘制参数
-		background(51);
-		frameRate(1);
+		background(193,205,205);
+		frameRate(1); //设置processing frameRate = 1,每过一秒调用一次draw函数..timeDelta增加一
+		textSize(32);
+		noStroke();
     }   
 		
     public void draw(){ 
     	if(newsRetrieved > 0){  //if newsRetrieved > 0 => we get the data from parse
-    		int positiveCount = 0;
-    		for(int i = 0; i < newsRetrieved; i++)
-    		{
-    			if(positveArray[i])
-    			{
-    				positiveCount++;
-    				fill(255,0,0);
-    				ellipse(width/2,height/2, positiveCount*10,positiveCount*10);
-    				textSize(32);
-    				text("Get the data from parse.", 10, 30);
-    			}
-    		}
-    	}
+    		timeDelta++;
+    		int i = timeDelta % newsRetrieved; //i = 时间 mod newsRetrieved (让i在0到newsRetrieved之间循环的变化) 
+    		//Calculate the drawing parameters
+    		int stepR = (int)((float)(width*0.5)/(float)newsRetrieved);  //根据positve news和negativenews比例和屏幕宽度 计算 每隔一秒 绘制圆球的半径应该增长多少
+    		int centerPositiveCircleX = stepR*positiveCount;
+    		int cneterNegativeCircleX = width - stepR*(newsRetrieved - positiveCount);
+    		int cneterCircleY = (int)(width*0.5);
+    		
+			Log.e("AllysonPower.partc", "stepR:" + stepR);
+			Log.d("AllysonPower.partc", "positiveCount:" + positiveCount);
+			//Draw out the positive/negative news trend step by step  (positive/negative news数量随时间的增长趋势)
+			if (positveArray[i]) {
+				positiveStepCount++;
+				fill(255,66,66);  //绘制positive circle 的颜色
+				ellipse(centerPositiveCircleX, cneterCircleY, positiveStepCount*stepR, positiveStepCount*stepR);
+				if(positiveStepCount == positiveCount)	//本轮positive news增长变化趋势 绘制完毕 需要清零数据和画布 重新绘制
+				{
+					fill(193,205,205);
+					rect(0,0,width,height); //清屏
+					positiveStepCount = 0; //清零 重新绘制
+				}
+			} else {
+				negativeStepCount++;
+				fill(10,10,236);  //绘制negative circle 的颜色
+				ellipse(cneterNegativeCircleX, cneterCircleY,negativeStepCount * stepR,negativeStepCount * stepR);
+				if(negativeStepCount == (newsRetrieved - positiveCount))
+				{
+					negativeStepCount = 0; //清零 重新绘制
+				}
+			}
+
+		}
     }
 }
