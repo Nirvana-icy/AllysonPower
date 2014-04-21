@@ -69,6 +69,7 @@ public class partc extends PApplet{
 		background(193,205,205);
 		frameRate(1); //设置processing frameRate = 1,每过一秒调用一次draw函数..timeDelta增加一
 		textSize(32);
+		textAlign(CENTER);
 		noStroke();
     }   
 		
@@ -77,34 +78,53 @@ public class partc extends PApplet{
     		timeDelta++;
     		int i = timeDelta % newsRetrieved; //i = 时间 mod newsRetrieved (让i在0到newsRetrieved之间循环的变化) 
     		//Calculate the drawing parameters
-    		int stepR = (int)((float)(width*0.5)/(float)newsRetrieved);  //根据positve news和negativenews比例和屏幕宽度 计算 每隔一秒 绘制圆球的半径应该增长多少
+    		int lengthOfWide = width < height ? width : height; //横屏的时候 processing width()函数返回的是 屏幕的长...所以这里如果width > height 表示设备处于横屏状态...计算绘制圆圈的r 应该取height（）返回的数值
+    		int lengthOfHeight = width < height ? height : width;
+    		int stepR = (int)((float)(lengthOfWide*0.5)/(float)newsRetrieved);  //根据positve news和negativenews比例和屏幕宽度 计算 每隔一秒 绘制圆球的半径应该增长多少
     		int centerPositiveCircleX = stepR*positiveCount;
-    		int cneterNegativeCircleX = width - stepR*(newsRetrieved - positiveCount);
-    		int cneterCircleY = (int)(width*0.5);
+    		int centerNegativeCircleX = lengthOfWide - stepR*(newsRetrieved - positiveCount);
+    		int centerCircleY = (int)(lengthOfWide*0.5);
     		
 			Log.e("AllysonPower.partc", "stepR:" + stepR);
 			Log.d("AllysonPower.partc", "positiveCount:" + positiveCount);
+			//清屏 否则会重影 
+			fill(193,205,205);
+			rect(0,0,width,height);
 			//Draw out the positive/negative news trend step by step  (positive/negative news数量随时间的增长趋势)
 			if (positveArray[i]) {
 				positiveStepCount++;
 				fill(255,66,66);  //绘制positive circle 的颜色
-				ellipse(centerPositiveCircleX, cneterCircleY, positiveStepCount*stepR, positiveStepCount*stepR);
-				if(positiveStepCount == positiveCount)	//本轮positive news增长变化趋势 绘制完毕 需要清零数据和画布 重新绘制
+				ellipse(centerPositiveCircleX, centerCircleY, positiveStepCount*stepR, positiveStepCount*stepR);
+				text("Positive news:" + positiveStepCount, centerPositiveCircleX, 40);  //和positive circle同样颜色 绘制文字输出
+				fill(10,10,236);  //由于每次刷新擦除了上次绘制的文字 所以这里重新绘制一遍negative new的圆圈 文字输出 和 百分比
+				ellipse(centerNegativeCircleX, centerCircleY,negativeStepCount * stepR,negativeStepCount * stepR);
+				text("Negative news:" + negativeStepCount, centerNegativeCircleX, 40);
+				fill(255,255,255);  //白色绘制 百分比
+				if(positiveStepCount != positiveStepCount + negativeStepCount || negativeStepCount != positiveStepCount + negativeStepCount) //如果一个是100% 另一个是0%  这种情况 考虑到美观  不绘制出百分比
 				{
-					fill(193,205,205);
-					rect(0,0,width,height); //清屏
+					text((int)(100*(float)positiveStepCount/(float)(positiveStepCount+negativeStepCount)) + "%", centerPositiveCircleX, centerCircleY + 10); //positive 百分比
+					text((int)(100*(1-(float)positiveStepCount/(float)(positiveStepCount+negativeStepCount))) + "%", centerNegativeCircleX, centerCircleY + 10); //negative 百分比
+				}
+				if(positiveStepCount == positiveCount)	//本轮positive news增长变化趋势 绘制完毕 需要清零数据
+				{
 					positiveStepCount = 0; //清零 重新绘制
+					negativeStepCount = 0; //清零 重新绘制
 				}
 			} else {
 				negativeStepCount++;
 				fill(10,10,236);  //绘制negative circle 的颜色
-				ellipse(cneterNegativeCircleX, cneterCircleY,negativeStepCount * stepR,negativeStepCount * stepR);
-				if(negativeStepCount == (newsRetrieved - positiveCount))
+				ellipse(centerNegativeCircleX, centerCircleY,negativeStepCount * stepR,negativeStepCount * stepR);
+				text("Negative news:" + negativeStepCount, centerNegativeCircleX, 40);
+				fill(255,66,66);   //由于每次刷新擦除了上次绘制的文字 所以这里重新绘制一遍positive new文字输出
+				text("Positive news:" + positiveStepCount, centerPositiveCircleX, 40);  //和positive circle同样颜色 绘制文字输出
+				ellipse(centerPositiveCircleX, centerCircleY, positiveStepCount*stepR, positiveStepCount*stepR);
+				fill(255,255,255);  //白色绘制 百分比
+				if(positiveStepCount != positiveStepCount + negativeStepCount || negativeStepCount != positiveStepCount + negativeStepCount) //如果一个是100% 另一个是0%  这种情况 考虑到美观  不绘制出百分比
 				{
-					negativeStepCount = 0; //清零 重新绘制
+					text((int)(100*(float)positiveStepCount/(float)(positiveStepCount+negativeStepCount)) + "%", centerPositiveCircleX, centerCircleY + 10); //positive 百分比
+					text((int)(100*(1-(float)positiveStepCount/(float)(positiveStepCount+negativeStepCount))) + "%", centerNegativeCircleX, centerCircleY + 10); //negative 百分比
 				}
 			}
-
 		}
     }
 }
