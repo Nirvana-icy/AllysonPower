@@ -76,7 +76,8 @@ public class parta extends Activity implements XListView.IXListViewListener {
         mListView.setXListViewListener(this);
         mListView.setRefreshTime(getTime());
     }
-
+    
+    
     @Override
     public void onWindowFocusChanged(boolean hasFocus) {
         super.onWindowFocusChanged(hasFocus);
@@ -217,7 +218,7 @@ public class parta extends Activity implements XListView.IXListViewListener {
  
 	}
     
-    private void createPartAUI(){
+ void createPartAUI(){
     	requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
         
         setContentView(R.layout.parta_home);

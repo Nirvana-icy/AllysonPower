@@ -85,9 +85,9 @@
           android:textColor="#424952"
           android:layout_weight="10"
           android:textSize="15sp" >
-          
       </TextView>
-        <ImageButton
+      
+      <com.speakup.ui.MyImageBtn
         android:id="@+id/seephoto"
         android:layout_width="40dp"
         android:layout_height="40dp"

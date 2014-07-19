@@ -24,11 +24,12 @@ import android.text.method.ScrollingMovementMethod;
 //import android.content.pm.PackageManager;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.*;
+import com.speakup.ui.MyImageBtn;
+
 
 public class NewsAdapter extends BaseAdapter {
 
@@ -37,27 +38,8 @@ public class NewsAdapter extends BaseAdapter {
 	public List<Map<String, PartANewsInfo>> newsdata;
 	public Map<String, PartANewsInfo> tempmap;
 	private Activity partaActivity;
+	private String imageUrl;
 
-    private ImageBtnClick btnClick;
-    
-    private OnClickListener listener = new OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            String imageURL = tempmap.get("News_Text").getNewsImageURL();
-            if (btnClick != null) {
-            	btnClick.onClick(v, imageURL);
-            }
-        }
-    };
-    
-    private void setImageBtnClickListener (ImageBtnClick btnClick) {
-        this.btnClick = btnClick;
-    }
-     
-    private interface ImageBtnClick {
-        void onClick(View v, String imageURL);
-    }
-    
 	public NewsAdapter(Context context,
 			List<Map<String, PartANewsInfo>> newsData, int newsContent,
 			Activity partaActivity) {
@@ -110,7 +92,7 @@ public class NewsAdapter extends BaseAdapter {
 					.findViewById(R.id.newscontent);
 			holder.newscontent.setMovementMethod(ScrollingMovementMethod
 					.getInstance());
-			holder.btn_newsImage = (ImageButton) convertView
+			holder.btn_newsImage = (MyImageBtn) convertView
 					.findViewById(R.id.seephoto);
 			convertView.setTag(holder);
 		} else {
@@ -138,47 +120,43 @@ public class NewsAdapter extends BaseAdapter {
 
 			holder.btn_newsImage.setImageResource(R.drawable.ver);
 			
-			holder.btn_newsImage.setOnClickListener(listener);
-	         
-	        setImageBtnClickListener(new ImageBtnClick() {
-	            @Override
-	            public void onClick(View v, String imageURL) {
-	            	dialog = new Dialog(partaActivity);
-					dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-					dialog.getWindow().setFlags(
-							WindowManager.LayoutParams.FLAG_FULLSCREEN,
-							WindowManager.LayoutParams.FLAG_FULLSCREEN);
-					dialog.setContentView(R.layout.image_dialog);
-					show();
-					//Log.d("@@@@@@@@@@@@@@@@@@@@@@@" + position);
-					//String imageUrl = "http://source.qunar.com/mkt_download/guide/rio_de_janeiro/imgs/small_cover_eab6f216.jpg";
-
-					// imageUrl=tempmap.get("News_Text").getNewsImageURL();
-					// imageUrl="http://files.parsetfss.com/1c7638ad-a242-4244-91f2-624ddea87453/tfss-260c534b-75a0-454c-b683-3a9c942357bb-IMG_2044.jpg";
-					Log.d("after click url" + imageURL);
-					Log.d("id:" + tempmap.get("News_Text").getEventText());
-					ImageView image = (ImageView) dialog.findViewById(R.id.image);
-					new DownloadImageTask((ImageView) dialog.findViewById(R.id.image)).execute(imageURL);
-
-					image.setOnClickListener(new ImageView.OnClickListener() {
-
+			
+			holder.btn_newsImage.setImageUrl(tempmap.get("News_Text").getNewsImageURL());
+			
+			holder.btn_newsImage.setOnClickListener(new Button.OnClickListener() {
 						@Override
 						public void onClick(View arg0) {
-							if (dialog != null) {
-								dialog.dismiss();
-							}
+							Log.d("ttclick imagebutton click imagebutton");
+							dialog = new Dialog(partaActivity);
+							dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+							dialog.getWindow().setFlags(
+									WindowManager.LayoutParams.FLAG_FULLSCREEN,
+									WindowManager.LayoutParams.FLAG_FULLSCREEN);
+							dialog.setContentView(R.layout.image_dialog);
+							show();
+					
+							String imageUrl = holder.btn_newsImage.getImageUrl();
+							
+							//String imageUrl = "http://source.qunar.com/mkt_download/guide/rio_de_janeiro/imgs/small_cover_eab6f216.jpg";
+
+							// imageUrl=tempmap.get("News_Text").getNewsImageURL();
+							// imageUrl="http://files.parsetfss.com/1c7638ad-a242-4244-91f2-624ddea87453/tfss-260c534b-75a0-454c-b683-3a9c942357bb-IMG_2044.jpg";
+							Log.d("after click url" + imageUrl);
+							Log.d("id:" + tempmap.get("News_Text").getEventText());
+							ImageView image = (ImageView) dialog.findViewById(R.id.image);
+							new DownloadImageTask((ImageView) dialog.findViewById(R.id.image)).execute(imageUrl);
+
+							image.setOnClickListener(new ImageView.OnClickListener() {
+
+								@Override
+								public void onClick(View arg0) {
+									if (dialog != null) {
+										dialog.dismiss();
+									}
+								}
+							});
 						}
 					});
-	            }
-	        });
-	        
-//			holder.btn_newsImage.setOnClickListener(new Button.OnClickListener() {
-//						@Override
-//						public void onClick(View arg0) {
-//							Log.d("ttclick imagebutton click imagebutton");
-//							
-//						}
-//					});
 		} else {
 			//holder.btn_newsImage.setVisibility(View.INVISIBLE);
 			// holder.btn_newsImage.setImageResource(R.drawable.location);
@@ -286,18 +264,19 @@ public class NewsAdapter extends BaseAdapter {
 			this.haveNewsImage = newsImage;
 		}
 
-		private ImageButton btn_newsImage;
+		private MyImageBtn btn_newsImage;
 
 		public ImageView getLocation() {
 			return btn_newsImage;
 		}
 
-		public void setLocation(ImageButton newsImage) {
+		public void setLocation(MyImageBtn newsImage) {
 			this.btn_newsImage = newsImage;
 		}
 
 	}
 
+	
 	// ImageCacha
 	/*
 	 * public static final ImageCache IMAGE_CACHE = new ImageCache();
