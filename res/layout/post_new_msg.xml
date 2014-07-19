@@ -155,9 +155,18 @@
                         android:src="@drawable/btn_send_msg" />
                 </LinearLayout>
             </LinearLayout>
+        
              
         </LinearLayout>
 
     </RelativeLayout>
+        <ImageView 
+                android:id="@+id/imageView"
+                android:layout_width="match_parent"
+                android:layout_height="230dp" 
+                android:layout_gravity="center_horizontal"
+                android:background="@drawable/table_qiandao_text"
+                android:scaleType="fitXY"
+                />
         
 </LinearLayout>

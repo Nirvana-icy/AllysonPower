@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout
+
+  xmlns:android="http://schemas.android.com/apk/res/android"
+
+  android:layout_width="fill_parent"
+
+  android:layout_height="fill_parent"
+  android:background="#d3d7d4"
+  android:orientation="vertical">
+  
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:orientation="horizontal">
+      <ImageView
+          android:id="@+id/atticon"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:src="@drawable/atticon"
+          android:layout_margin="1dp">
+          </ImageView>
+      <TextView
+          android:id="@+id/subject"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:textSize="15sp"
+          android:textColor="#424952">
+          
+      </TextView>
+      
+      </LinearLayout>
+   <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:orientation="horizontal">
+      <TextView
+          android:id="@+id/postername"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:textSize="15sp"
+          android:textColor="#424952"
+          android:layout_weight="1">          
+      </TextView>
+       <TextView
+          android:id="@+id/posttime"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:textSize="15sp"
+          android:textColor="#424952"
+          android:layout_weight="1">         
+      </TextView>
+       <TextView
+          android:id="@+id/happentime"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:textSize="15sp"
+          android:textColor="#424952"
+          android:visibility="gone"  
+          android:layout_weight="1">
+          
+      </TextView>
+      <TextView
+          android:id="@+id/happenarea"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:textSize="15sp"
+          android:textColor="#424952"
+          android:layout_weight="1">          
+      </TextView>
+      </LinearLayout>
+
+   <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:orientation="horizontal">
+
+      <TextView
+          android:id="@+id/newscontent"
+          android:layout_width="wrap_content"
+          android:layout_marginRight="5dip"
+          android:layout_height="wrap_content"
+          android:background="@drawable/textview_border"
+          android:textColor="#424952"
+          android:layout_weight="10"
+          android:textSize="15sp" >
+          
+      </TextView>
+        <ImageButton
+        android:id="@+id/seephoto"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:scaleType="fitXY"
+        android:adjustViewBounds="true"
+        android:contentDescription="@drawable/location"
+        android:layout_marginLeft="2dp"
+        android:layout_weight="1"
+        android:gravity="bottom"
+        />
+      
+      </LinearLayout>
+</LinearLayout>
+  
+
+  
+
+  
+
+  
+
+  

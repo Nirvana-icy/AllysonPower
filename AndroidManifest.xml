@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.allysonpower.ui"
+    package="com.speakup.ui"
     android:versionCode="1"
     android:versionName="1.0" >
 
     <uses-sdk
-        android:minSdkVersion="14"
+        android:minSdkVersion="9"
         android:targetSdkVersion="19" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" /><uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -13,6 +13,8 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <!--
      The following permission is not required to use
      Google Maps Android API v2, but is recommended.
@@ -25,15 +27,18 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name="com.allysonpower.ui.IniPage"
+            android:name="com.speakup.ui.IniPage"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="parta" ></activity>
+        <activity 
+            android:name="parta" 
+            android:theme="@style/titlebarstyle"
+            
+            ></activity>
         <activity android:name="partb" ></activity>
         <meta-data
             android:name="com.google.android.maps.v2.API_KEY"
@@ -45,6 +50,7 @@
         <activity android:name="partc" ></activity>
         <activity android:name="partd" ></activity>
         <activity android:name="FourIcon_page" ></activity>
+        <activity android:name="SelectPicActivity" ></activity>        
     </application>
     
 
