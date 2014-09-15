@@ -1,11 +1,22 @@
+##Project SpeakUp 
+
+
+[PPT of My Project](https://raw.githubusercontent.com/Nirvana-icy/AllysonPower/master/presentation.pptx)
+
+![Part A](https://raw.githubusercontent.com/Nirvana-icy/AllysonPower/master/a.png)
+
+![Part A](https://raw.githubusercontent.com/Nirvana-icy/AllysonPower/master/b.png)
+
+
+
 ###14.3.24 
-~~~3rd-source & lib:~~~  
-~~~ActionBarSherlock-master~~~  
-~~~androidquery~~~   
-~~~Add post_new_msg.xml~~~  
+3rd-source & lib: 
+ActionBarSherlock-master
+androidquery 
+Add post_new_msg.xml
   
 ###14.3.25
-~~~PartD UI Logic~~~
+PartD UI Logic
   
 Target:Post news to parse via Activity post_new_msg.
   
