@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">pulltorefresh</string>
+    <string name="pull_to_refresh_pull_label">Pull to see more...</string>
+    <string name="pull_to_refresh_release_label">Release to see more...</string>
+    <string name="pull_to_refresh_refreshing_label">Loading...</string>
+    <string name="pull_to_refresh_tap_label">Tap to see more...</string>
+    <string name="pull_to_refresh_no_more_news">No more news.</string>
+</resources>

@@ -22,7 +22,7 @@ package com.speakup.util;
  */
 public class Log {
     protected static final boolean DEBUG = true;
-    protected static final String TAG = "SpeakUp";
+    protected static final String TAG = "Weibo";
 
     /**
      * Send a VERBOSE log message.

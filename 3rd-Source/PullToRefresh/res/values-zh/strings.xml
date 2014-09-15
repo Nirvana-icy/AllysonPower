@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="pull_to_refresh_pull_label">下拉查看更多</string>
+    <string name="pull_to_refresh_release_label">放开以查看更多</string>
+    <string name="pull_to_refresh_refreshing_label">载入中</string>
+    <string name="pull_to_refresh_tap_label">点击这里查看更多</string>
+</resources>

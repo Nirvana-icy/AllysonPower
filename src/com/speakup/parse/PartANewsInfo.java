@@ -5,7 +5,6 @@ import java.util.Date;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
-import android.util.Log;
 import android.widget.TextView;
 
 import com.parse.ParseClassName;
@@ -64,7 +63,7 @@ public class PartANewsInfo extends ParseObject {
 		return getBoolean("bPhotoExist");
 	}
 	
-	public void setHaveImage(boolean bPhotoExist) {
+	public void seHaveImage(boolean bPhotoExist) {
 		put("bPhotoExist", bPhotoExist);
 	}
 	
@@ -86,7 +85,6 @@ public class PartANewsInfo extends ParseObject {
     
 	public String getNewsImageURL() {
 		ParseFile photo = getParseFile("photoImage");
-		Log.d("$$$$$$$$$$$$$$$$" , photo.getUrl());
 		return photo.getUrl();
 	}
 	
@@ -100,7 +98,7 @@ public class PartANewsInfo extends ParseObject {
 	}
 	
 	public Date getPostTime() {
-		return getCreatedAt();
+		return getUpdatedAt();
 	}
 	
 	public boolean getDGB_Boolean() {

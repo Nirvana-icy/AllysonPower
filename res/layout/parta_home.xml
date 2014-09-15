@@ -10,11 +10,11 @@
         android:layout_width="fill_parent"  
         android:layout_height="wrap_content"  
         android:layout_weight="1">
-    <com.markmao.pulltorefresh.widget.XListView
-        android:id="@+id/list_view"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:cacheColorHint="#00000000" 
+    <com.markupartist.android.widget.PullToRefreshListView
+        android:id="@+id/android:list"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:drawSelectorOnTop="false"
         android:padding="5dp" />
     </LinearLayout>
     <LinearLayout   
